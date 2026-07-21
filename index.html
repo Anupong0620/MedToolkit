@@ -1,0 +1,1618 @@
+<!DOCTYPE html>
+<html lang="th" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ระบบจัดการยาและเครื่องมือแพทย์ - Dashboard Portal Pro</title>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Sarabun', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Google Fonts (Sarabun) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- SortableJS -->
+  <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.6/Sortable.min.js"></script>
+
+  <style>
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    .dark ::-webkit-scrollbar-track {
+      background: #1e293b;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 4px;
+    }
+    .dark ::-webkit-scrollbar-thumb {
+      background: #475569;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
+
+    /* Sortable styles */
+    .sortable-ghost {
+      opacity: 0.2;
+      transform: scale(0.95);
+      border: 2px dashed #10b981 !important;
+    }
+    .sortable-chosen {
+      box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1) !important;
+    }
+    .sortable-drag {
+      cursor: grabbing !important;
+    }
+  </style>
+</head>
+
+<body class="bg-[#f8fafc] text-slate-800 transition-colors duration-300 dark:bg-slate-900 dark:text-slate-100 min-h-screen font-sans pb-24">
+
+  <!-- Decorative top bar -->
+  <div class="h-2 bg-gradient-to-r from-emerald-500 via-teal-500 to-sky-600"></div>
+
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8">
+    
+    <!-- HEADER -->
+    <header class="flex flex-col xl:flex-row xl:items-center xl:justify-between pb-8 mb-8 border-b border-slate-200 dark:border-slate-800 gap-4">
+      <div>
+        <div class="flex items-center gap-3">
+          <div class="p-2.5 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 rounded-2xl">
+            <i data-lucide="layout-grid" class="w-8 h-8"></i>
+          </div>
+          <div>
+            <h1 class="text-2xl sm:text-3xl font-bold tracking-tight bg-gradient-to-r from-slate-900 to-slate-700 dark:from-white dark:to-slate-300 bg-clip-text text-transparent">
+              ระบบรวมโปรเจกต์งานแพทย์ & คลินิก
+            </h1>
+            <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">
+              Endo-Pharma Ecosystem • คอนฟิก จัดเรียง และแยกแฟ้มข้อมูลตามความต้องการของคุณได้สมบูรณ์แบบ
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Actions -->
+      <div class="flex flex-wrap items-center gap-3">
+        <!-- Edit Mode Toggle -->
+        <button id="editModeBtn" class="flex items-center gap-2 px-4 py-2.5 text-sm font-semibold text-white bg-emerald-500 hover:bg-emerald-600 dark:bg-emerald-600 dark:hover:bg-emerald-700 rounded-xl shadow-lg shadow-emerald-500/20 active:scale-95 transition-all">
+          <i id="editModeIcon" data-lucide="edit-3" class="w-4 h-4"></i>
+          <span id="editModeText">เปิดโหมดปรับแต่งบอร์ด</span>
+        </button>
+
+        <!-- Export Code Button -->
+        <button id="exportCodeBtn" class="flex items-center gap-2 px-4 py-2.5 text-sm font-medium text-blue-700 bg-blue-50 border border-blue-200 rounded-xl hover:bg-blue-100 active:scale-95 transition-all dark:bg-blue-900/30 dark:border-blue-800/50 dark:text-blue-300 dark:hover:bg-blue-900/50" title="Export โค้ดสำหรับอัปเดตขึ้น GitHub">
+          <i data-lucide="download" class="w-4 h-4"></i>
+          <span>Export โค้ด</span>
+        </button>
+
+        <!-- Reset Button -->
+        <button id="resetAllBtn" class="flex items-center gap-2 px-4 py-2.5 text-sm font-medium text-slate-700 bg-white border border-slate-200 rounded-xl hover:bg-slate-50 active:scale-95 transition-all dark:bg-slate-800 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-700/50" title="คืนค่าเริ่มต้นระบบทั้งหมด">
+          <i data-lucide="rotate-ccw" class="w-4 h-4"></i>
+          <span class="hidden sm:inline">รีเซ็ตค่าเริ่มต้น</span>
+        </button>
+
+        <!-- GitHub Link -->
+        <a href="https://github.com/anupong0620" target="_blank" rel="noopener" class="flex items-center gap-2 px-4 py-2.5 text-sm font-medium text-slate-700 bg-white border border-slate-200 rounded-xl hover:bg-slate-50 active:scale-95 transition-all dark:bg-slate-800 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-700/50" title="ไปที่ GitHub ของฉัน">
+          <svg class="w-4 h-4" viewBox="0 0 16 16" fill="currentColor">
+            <path d="M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-1.12.38-.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z"></path>
+          </svg>
+          <span class="hidden sm:inline">GitHub</span>
+        </a>
+
+        <!-- Light/Dark Theme Switcher -->
+        <button id="themeToggleBtn" class="p-2.5 bg-white border border-slate-200 text-slate-700 dark:bg-slate-800 dark:border-slate-700 dark:text-slate-300 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-700/50 active:scale-95 transition-all">
+          <i id="themeIcon" data-lucide="moon" class="w-5 h-5"></i>
+        </button>
+      </div>
+    </header>
+
+    <!-- CUSTOMIZER TOOLBAR (Visible only in edit mode) -->
+    <section id="customizerToolbar" class="hidden mb-8 p-4 bg-emerald-500/5 border border-emerald-500/20 rounded-2xl flex flex-wrap items-center justify-between gap-4">
+      <div class="flex items-center gap-2.5">
+        <span class="flex h-3 w-3 relative">
+          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+          <span class="relative inline-flex rounded-full h-3 w-3 bg-emerald-500"></span>
+        </span>
+        <span class="text-sm font-semibold text-emerald-800 dark:text-emerald-300">โหมดปรับแต่งบอร์ดกำลังทำงาน: คลิกปุ่มต่างๆ เพื่อเริ่มการแก้ไข</span>
+      </div>
+      <div class="flex flex-wrap items-center gap-3">
+        <button onclick="openFolderModal()" class="flex items-center gap-1.5 px-3.5 py-2 text-xs font-bold text-teal-700 bg-teal-50 hover:bg-teal-100 dark:text-teal-300 dark:bg-teal-950/40 rounded-xl transition-all">
+          <i data-lucide="folder-plus" class="w-4 h-4"></i>
+          <span>＋ เพิ่มแฟ้มสะสมงานใหม่</span>
+        </button>
+        <button onclick="openCategoryModal()" class="flex items-center gap-1.5 px-3.5 py-2 text-xs font-bold text-sky-700 bg-sky-50 hover:bg-sky-100 dark:text-sky-300 dark:bg-sky-950/40 rounded-xl transition-all">
+          <i data-lucide="tag" class="w-4 h-4"></i>
+          <span>＋ จัดการหมวดหมู่ย่อย</span>
+        </button>
+        <button onclick="openCardModal()" class="flex items-center gap-1.5 px-3.5 py-2 text-xs font-bold text-indigo-700 bg-indigo-50 hover:bg-indigo-100 dark:text-indigo-300 dark:bg-indigo-950/40 rounded-xl transition-all">
+          <i data-lucide="plus-circle" class="w-4 h-4"></i>
+          <span>＋ สร้างการ์ดโปรเจกต์ใหม่</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- SEARCH & FILTER CONTROL PANEL -->
+    <section class="mb-12 bg-white dark:bg-slate-800 rounded-2xl p-4 sm:p-6 shadow-sm border border-slate-100 dark:border-slate-800/80">
+      <div class="flex flex-col lg:flex-row gap-4 items-stretch lg:items-center justify-between">
+        
+        <!-- Search Input -->
+        <div class="relative flex-1 max-w-xl">
+          <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
+            <i data-lucide="search" class="w-5 h-5"></i>
+          </div>
+          <input 
+            type="text" 
+            id="searchInput" 
+            placeholder="พิมพ์คำค้นหา เช่น ชื่อโปรเจกต์ ลิงก์ คำอธิบาย..." 
+            class="block w-full pl-10 pr-10 py-3 bg-slate-50 dark:bg-slate-900 border-none rounded-xl focus:ring-2 focus:ring-emerald-500 focus:outline-none text-slate-900 dark:text-white placeholder-slate-400 text-sm transition-all"
+          />
+          <button id="clearSearchBtn" class="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 hidden">
+            <i data-lucide="x" class="w-4 h-4"></i>
+          </button>
+        </div>
+
+        <div class="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400 bg-slate-50 dark:bg-slate-900 px-4 py-3 rounded-xl border border-slate-100 dark:border-slate-800/50">
+          <i data-lucide="info" class="w-4 h-4 text-emerald-500 shrink-0"></i>
+          <span>เลือกกรองดูบางประเภท หรือพิมพ์คำสำคัญเพื่อคัดกรองข้อมูลอย่างรวดเร็ว</span>
+        </div>
+      </div>
+
+      <!-- Categories Filter Tabs -->
+      <div class="mt-5 flex flex-wrap gap-2 border-t border-slate-100 dark:border-slate-700/50 pt-4" id="categoryFilters">
+        <!-- Will be rendered dynamically -->
+      </div>
+    </section>
+
+    <!-- FOLDERS & CARDS CONTAINER -->
+    <main id="foldersContainer" class="space-y-16">
+      <!-- Will be rendered dynamically via renderDashboard() -->
+    </main>
+
+    <!-- EMPTY STATE VIEW -->
+    <div id="emptyState" class="hidden flex-col items-center justify-center py-16 px-4 bg-white dark:bg-slate-800 rounded-2xl border border-slate-100 dark:border-slate-800 text-center shadow-sm">
+      <div class="w-16 h-16 bg-slate-100 dark:bg-slate-900 text-slate-400 dark:text-slate-600 rounded-full flex items-center justify-center mb-4">
+        <i data-lucide="folder-search" class="w-8 h-8"></i>
+      </div>
+      <h3 class="text-lg font-bold text-slate-950 dark:text-white">ไม่พบแฟ้มหรือโปรเจกต์ที่ตรงกับเงื่อนไข</h3>
+      <p class="text-sm text-slate-500 dark:text-slate-400 mt-1 max-w-sm">
+        ลองเปลี่ยนกลุ่มตัวกรอง ล้างคำสืบค้น หรือกดปุ่มด้านล่างเพื่อแสดงรายการทั้งหมด
+      </p>
+      <button id="clearAllFiltersBtn" class="mt-4 px-4 py-2 bg-emerald-500 hover:bg-emerald-600 text-white font-semibold rounded-xl text-sm active:scale-95 transition-all">
+        รีเซ็ตการค้นหาทั้งหมด
+      </button>
+    </div>
+
+  </div>
+
+  <!-- GLOBAL DIALOG MODAL (For Folder, Category, Card creations/edits) -->
+  <div id="configModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm opacity-0 pointer-events-none transition-all duration-300">
+    <div class="bg-white dark:bg-slate-800 w-full max-w-2xl rounded-3xl shadow-2xl border border-slate-100 dark:border-slate-700 overflow-hidden transform scale-95 transition-all duration-300 max-h-[90vh] flex flex-col">
+      <!-- Modal Header -->
+      <div class="px-6 py-4 border-b border-slate-100 dark:border-slate-700/50 flex justify-between items-center bg-slate-50 dark:bg-slate-900/40">
+        <h3 id="modalTitle" class="text-lg font-bold text-slate-900 dark:text-white">ปรับแต่งบอร์ด</h3>
+        <button onclick="closeModal()" class="p-1 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition-colors">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+      <!-- Modal Body (Scrollable) -->
+      <div id="modalBody" class="p-6 overflow-y-auto space-y-4 text-sm text-slate-600 dark:text-slate-300">
+        <!-- Content will be injected dynamically -->
+      </div>
+      <!-- Modal Footer -->
+      <div class="px-6 py-4 border-t border-slate-100 dark:border-slate-700/50 flex items-center justify-end gap-3 bg-slate-50 dark:bg-slate-900/40">
+        <button onclick="closeModal()" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold rounded-xl text-xs dark:bg-slate-700 dark:text-slate-300 dark:hover:bg-slate-600 transition-all">
+          ยกเลิก
+        </button>
+        <button id="saveModalBtn" class="px-4 py-2 bg-emerald-500 hover:bg-emerald-600 text-white font-semibold rounded-xl text-xs shadow-md shadow-emerald-500/20 transition-all">
+          บันทึกการแก้ไข
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST NOTIFICATION -->
+  <div id="toast" class="fixed bottom-5 right-5 z-50 bg-slate-900 dark:bg-slate-800 text-white border border-slate-800 dark:border-slate-700 px-4 py-3 rounded-xl shadow-xl flex items-center gap-2 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none">
+    <i data-lucide="check-circle" class="w-5 h-5 text-emerald-400"></i>
+    <span id="toastMsg" class="text-sm font-medium">บันทึกเรียบร้อย!</span>
+  </div>
+
+  <script>
+  // -----------------------------------------------------------------
+  // DEFAULT CONFIG & DATA STRUCTURE
+  // -----------------------------------------------------------------
+  const defaultFolders = [
+    {
+      "id": "folderPharmacy",
+      "name": "🏥 แฟ้มระบบงานเภสัชกรรม & คลินิก",
+      "desc": "ระบบสืบค้นข้อมูลยา, เครื่องคำนวณสูตรยาทางคลินิก, และระบบงานคลังเภสัชกรรม"
+    },
+    {
+      "id": "folderOthers",
+      "name": "📁 แฟ้มเครื่องมืออื่นๆ & งานสร้างสรรค์",
+      "desc": "ระบบบันทึกธุรกรรมการเงิน, งานวิเคราะห์ข้อมูลรูปภาพ และระบบจัดการ Prompt"
+    }
+  ];
+
+  const defaultCategories = [
+    {
+      "id": "clinical",
+      "name": "🏥 งานคลินิก & ยา",
+      "color": "sky"
+    },
+    {
+      "id": "calculator",
+      "name": "🧮 เครื่องคำนวณ",
+      "color": "yellow"
+    },
+    {
+      "id": "management",
+      "name": "📦 คลัง & จัดการระบบ",
+      "color": "teal"
+    },
+    {
+      "id": "vaccine",
+      "name": "💉 ระบบจัดการวัคซีน",
+      "color": "purple"
+    },
+    {
+      "id": "creative",
+      "name": "🎨 สร้างสรรค์ & อื่นๆ",
+      "color": "pink"
+    }
+  ];
+
+  const defaultCards = [
+    {
+      "id": "clinical-tool",
+      "folderId": "folderPharmacy",
+      "categoryId": "clinical",
+      "emoji": "🩺",
+      "title": "เครื่องมือทางคลินิก",
+      "subtitle": "Endo-Pharma • เภสัชกรเอ็นดู",
+      "desc": "หน้าหลักศูนย์รวบรวมเครื่องมือทางด้านคลินิกและข้อมูลสนับสนุนการทำงานของเภสัชกร",
+      "links": [
+        {
+          "text": "เปิด Drug Timeline",
+          "url": "https://pharmatoolsthailand.github.io/Homepage/index.html"
+        },
+        {
+          "text": "เปิดคำนวณขนาดยา Warfarin",
+          "url": "https://pharmatoolsthailand.github.io/Homepage/index.html"
+        }
+      ]
+    },
+    {
+      "id": "clinical-guideline-browser",
+      "folderId": "folderPharmacy",
+      "categoryId": "clinical",
+      "emoji": "📚",
+      "title": "Clinical Guideline",
+      "subtitle": "Treatment Guidelines",
+      "desc": "แหล่งรวม GUIDELINE ในการรักษาและแนวทางการปฏิบัติทางคลินิกที่สำคัญเพื่อใช้ประกอบการตัดสินใจ",
+      "links": [
+        {
+          "text": "บัญชียาหลักแห่งชาติ",
+          "url": "https://rxtoolsthailand.com/tools/nlem-browser"
+        },
+        {
+          "text": "เปิด Guideline Browser",
+          "url": "https://rxtoolsthailand.com/tools/clinical-guideline-browser"
+        },
+        {
+          "text": "เปิด Guideline CPG",
+          "url": "https://cpg.dms.go.th/"
+        }
+      ]
+    },
+    {
+      "id": "drug-timeline",
+      "folderId": "folderPharmacy",
+      "categoryId": "clinical",
+      "emoji": "📅",
+      "title": "Drug Timeline Tool",
+      "subtitle": "ADR Analyzer",
+      "desc": "เครื่องมือสร้างไทม์ไลน์ประวัติการใช้ยา เพื่อวิเคราะห์ความสัมพันธ์ของช่วงเวลาที่ได้รับยากับอาการข้างเคียง (ADR)",
+      "links": [
+        {
+          "text": "เปิด Drug Timeline Tool",
+          "url": "https://anupong0620.github.io/Drug-Timeline-Management-Tool/"
+        },
+        {
+          "text": "เปิด Drug Timeline by Endo Pharma",
+          "url": "https://pharmatoolsthailand.github.io/Homepage/index.html"
+        }
+      ]
+    },
+    {
+      "id": "drug-allergy-backup",
+      "folderId": "folderPharmacy",
+      "categoryId": "clinical",
+      "emoji": "🧬",
+      "title": "Drug Allergy (Backup)",
+      "subtitle": "Offline Database",
+      "desc": "ระบบตรวจสอบประวัติการแพ้ยาสำรอง ทำงานแบบออฟไลน์เพื่อความต่อเนื่องในการรักษาพยาบาลยามระบบขัดข้อง",
+      "links": [
+        {
+          "text": "เปิด Drug Allergy Backup",
+          "url": "https://anupong0620.github.io/drug-allergy-backup/"
+        }
+      ]
+    },
+    {
+      "id": "warfarin",
+      "folderId": "folderPharmacy",
+      "categoryId": "clinical",
+      "emoji": "💊",
+      "title": "Warfarin Tool Suite",
+      "subtitle": "Anticoagulant Care",
+      "desc": "ชุดโปรแกรมบันทึกข้อมูลผู้ป่วยและการตรวจสอบความซ้ำซ้อนของการประเมินยา Warfarin",
+      "links": [
+        {
+          "text": "Warfarin Pharmacist Note",
+          "url": "https://anupong0620.github.io/WARFARIN-SAVE1/"
+        },
+        {
+          "text": "Easy Warfarin Dose Adjuster<br>(For IPD)",
+          "url": "https://anupong0620.github.io/Easy-Warfarin-Dose-Adjuster/"
+        },
+        {
+          "text": "Warfarin Double Check",
+          "url": "https://anupong0620.github.io/Warfarin-Drug-Checker/"
+        },
+        {
+          "text": "เปิด Warfarin by Endo Pharma",
+          "url": "https://pharmatoolsthailand.github.io/Homepage/index.html"
+        }
+      ]
+    },
+    {
+      "id": "pharmareuse",
+      "folderId": "folderPharmacy",
+      "categoryId": "management",
+      "emoji": "♻️",
+      "title": "PharmaReuse",
+      "subtitle": "AppSheet System",
+      "desc": "ระบบเทคโนโลยีสารสนเทศช่วยบริหารและติดตามการนำยานอกคืนมาหมุนเวียนใช้ใหม่ (Drug Reuse) อย่างปลอดภัย",
+      "links": [
+        {
+          "text": "เปิด PharmaReuse",
+          "url": "https://www.appsheet.com/start/4f7f5680-f3b4-4f66-a860-a92f5b19124b"
+        }
+      ]
+    },
+    {
+      "id": "drug-calculator",
+      "folderId": "folderPharmacy",
+      "categoryId": "calculator",
+      "emoji": "🧮",
+      "title": "คำนวณขนาดยาเด็ก",
+      "subtitle": "Tablet to Syrup Convertor",
+      "desc": "เครื่องมือคํานวณสัดส่วนขนาดยาสูตรเม็ดปรับเข้าสู่ขนาดยาน้ำสําหรับผู้ป่วยเด็กได้อย่างแม่นยำ",
+      "links": [
+        {
+          "text": "เปิด Drug Calculator",
+          "url": "https://www.appsheet.com/start/df4bc12f-0075-40d1-be15-d520407876ae"
+        }
+      ]
+    },
+    {
+      "id": "kiddose-safe",
+      "folderId": "folderPharmacy",
+      "categoryId": "calculator",
+      "emoji": "📊",
+      "title": "Clinical Dose Calc",
+      "subtitle": "by ภก.ณัฐพล เอี่ยมสากล",
+      "desc": "ระบบเว็บแอปพลิเคชันคํานวณและให้คําแนะนําปรับขนาดของยาระดับสูงเชิงคลินิก",
+      "links": [
+        {
+          "text": "เปิด Dose Calculator",
+          "url": "https://clinicaldosecalculator1-2-12d373.gitlab.io/?fbclid=IwZnRzaARxNw1leHRuA2FlbQIxMQBzcnRjBmFwcF9pZAo2NjI4NTY4Mzc5AAEeYygrd-w-8E-jopxcq9dgFbUKLVBqzdynAbDQt8MND2XErRVLbrcnY7JWP30_aem_oDrLiKimcsegB39CUEIOYg"
+        }
+      ]
+    },
+    {
+      "id": "vaccine-manager",
+      "folderId": "folderPharmacy",
+      "categoryId": "vaccine",
+      "emoji": "💉",
+      "title": "Vaccine Manager",
+      "subtitle": "Label & Inventory Monitor",
+      "desc": "ระบบบริหารจัดการวัคซีนแบบครบวงจร ครอบคลุมทั้งการพิมพ์ฉลากสติ๊กเกอร์ตามมาตรฐาน และแดชบอร์ดสรุปยอดคงคลังแบบ Real-time",
+      "links": [
+        {
+          "text": "Vaccine Label Manager (VaxPrint)",
+          "url": "https://ai.studio/apps/drive/1gtbE1VGYg4_Y-Qmp5plWmEfi4wRXa6rO"
+        },
+        {
+          "text": "Vaccine Dashboard",
+          "url": "https://anupong0620.github.io/vaccine-inventory-dashboard/"
+        }
+      ]
+    },
+    {
+      "id": "drug-box-check",
+      "folderId": "folderPharmacy",
+      "categoryId": "management",
+      "emoji": "📦",
+      "title": "Drug Box Check",
+      "subtitle": "Emergency Box Monitor",
+      "desc": "โปรแกรมตรวจสอบกล่องยาฉุกเฉินประจำวอร์ด ตรวจสอบความถูกต้องและวันหมดอายุอย่างต่อเนื่อง",
+      "links": [
+        {
+          "text": "เปิด Drug Box Check",
+          "url": "https://anupong0620.github.io/EMER-BOX-2-test/"
+        }
+      ]
+    },
+    {
+      "id": "price-check",
+      "folderId": "folderPharmacy",
+      "categoryId": "management",
+      "emoji": "💰",
+      "title": "ราคาขายยา รพ.รัฐ",
+      "subtitle": "State Hospital Pricing",
+      "desc": "เครื่องมือสืบค้นและเทียบข้อมูลราคาขายยาในกลุ่มโรงพยาบาลรัฐบาล เพื่อความเหมาะสมด้านจัดจัดเตรียมงบประมาณ",
+      "links": [
+        {
+          "text": "ตรวจสอบราคาขายยา",
+          "url": "https://anupong0620.github.io/Price-Check/"
+        }
+      ]
+    },
+    {
+      "id": "pharmacist-pro-adr",
+      "folderId": "folderPharmacy",
+      "categoryId": "clinical",
+      "emoji": "💊",
+      "title": "Drug Data Portal",
+      "subtitle": "Clinical Reference Databases",
+      "desc": "ทางเข้าสืบค้นฐานข้อมูลความรู้ยาและแนวทางการรักษาระดับมาตรฐานสากลที่จำเป็นเชิงคลินิก",
+      "links": [
+        {
+          "text": "MERCK Manuals",
+          "url": "https://www.merckmanuals.com/professional"
+        },
+        {
+          "text": "MEDSCAPE Portal",
+          "url": "https://www.medscape.com/?_gl=1*1e6qt4u*_gcl_au*NDgzODA1NTc2LjE3ODAwNTQ4NTY."
+        }
+      ]
+    },
+    {
+      "id": "forexflow",
+      "folderId": "folderOthers",
+      "categoryId": "creative",
+      "emoji": "📈",
+      "title": "ForexFlow",
+      "subtitle": "Trade Analytics Tool",
+      "desc": "ระบบบันทึกสถิติการเทรดคำนวณสัดส่วนกำไร-ขาดทุน และวิเคราะห์ Performance รายเดือนอย่างละเอียด",
+      "links": [
+        {
+          "text": "เปิด ForexFlow",
+          "url": "https://aistudio.google.com/apps/fac04af7-ea1d-4a8c-981a-cfd588411c71?showPreview=true&showAssistant=true"
+        }
+      ]
+    },
+    {
+      "id": "canva-metadata-gen",
+      "folderId": "folderOthers",
+      "categoryId": "creative",
+      "emoji": "🎨",
+      "title": "Canva Metadata Gen",
+      "subtitle": "AI Image Metadata Assistant",
+      "desc": "ระบบปัญญาประดิษฐ์ (AI) ช่วยคิดวิเคราะห์และสร้างหัวข้อ (Title) และแท็กหลัก (Keyword) สำหรับงานกราฟิก",
+      "links": [
+        {
+          "text": "เปิด Canva Metadata Gen",
+          "url": "https://ai.studio/apps/drive/1SeJSsq40PmkL4YMer5rOtQIg3UonJ6qp"
+        }
+      ]
+    },
+    {
+      "id": "prompt-studio-pro",
+      "folderId": "folderOthers",
+      "categoryId": "creative",
+      "emoji": "🧠",
+      "title": "Prompt Studio Pro",
+      "subtitle": "Workspace Generator",
+      "desc": "พื้นที่ทำงานบริหารจัดการชุดคำสั่ง (Prompt Workspace) สำหรับการเขียนเนื้อหาเชิงลึกและจัดระเบียบบริบทงานเขียน",
+      "links": [
+        {
+          "text": "เปิด Prompt Studio Pro",
+          "url": "https://anupong0620.github.io/Prompt-Studio-Pro/"
+        }
+      ]
+    }
+  ];
+
+    // Storage Keys
+    const STORE_FOLDERS = 'custom:folders:v4';
+    const STORE_CATEGORIES = 'custom:categories:v4';
+    const STORE_CARDS = 'custom:cards:v4';
+    const STORE_THEME = 'projectGridTheme';
+
+    // Explicit DOM Element References
+    const themeToggleBtn = document.getElementById('themeToggleBtn');
+    const themeIcon = document.getElementById('themeIcon');
+    const searchInput = document.getElementById('searchInput');
+    const clearSearchBtn = document.getElementById('clearSearchBtn');
+    const categoryFilters = document.getElementById('categoryFilters');
+    const clearAllFiltersBtn = document.getElementById('clearAllFiltersBtn');
+
+    // Application State
+    let folders = [];
+    let categories = [];
+    let cards = [];
+    
+    let isEditMode = false;
+    let searchQuery = '';
+    let activeFilter = 'all';
+
+    // Sortable Instances Container
+    let sortableInstances = [];
+
+    // -----------------------------------------------------------------
+    // DATA LOAD & STORAGE MANAGEMENT
+    // -----------------------------------------------------------------
+    function loadState() {
+      folders = JSON.parse(localStorage.getItem(STORE_FOLDERS)) || defaultFolders;
+      categories = JSON.parse(localStorage.getItem(STORE_CATEGORIES)) || defaultCategories;
+      cards = JSON.parse(localStorage.getItem(STORE_CARDS)) || defaultCards;
+    }
+
+    function saveState() {
+      localStorage.setItem(STORE_FOLDERS, JSON.stringify(folders));
+      localStorage.setItem(STORE_CATEGORIES, JSON.stringify(categories));
+      localStorage.setItem(STORE_CARDS, JSON.stringify(cards));
+      updateCategoryCounts();
+    }
+
+    // -----------------------------------------------------------------
+    // DYNAMIC RENDERING ENGINE
+    // -----------------------------------------------------------------
+    function renderDashboard() {
+      const container = document.getElementById('foldersContainer');
+      container.innerHTML = '';
+      
+      // Clear previous Sortable instances
+      sortableInstances.forEach(inst => inst.destroy());
+      sortableInstances = [];
+
+      let visibleFolders = 0;
+
+      // Render Each Folder
+      folders.forEach(folder => {
+        // Filter cards belonging to this folder and matching search & category constraints
+        const folderCards = cards.filter(card => {
+          if (card.folderId !== folder.id) return false;
+          
+          const categoryMatch = (activeFilter === 'all' || card.categoryId === activeFilter);
+          
+          const searchLower = searchQuery.toLowerCase();
+          const titleMatch = card.title.toLowerCase().includes(searchLower);
+          const descMatch = card.desc.toLowerCase().includes(searchLower);
+          const subMatch = card.subtitle.toLowerCase().includes(searchLower);
+          
+          // Check link text or url matching search
+          let linksMatch = false;
+          if (card.links && Array.isArray(card.links)) {
+            linksMatch = card.links.some(l => l.text.toLowerCase().includes(searchLower) || l.url.toLowerCase().includes(searchLower));
+          }
+
+          const searchMatch = searchQuery === '' || titleMatch || descMatch || subMatch || linksMatch;
+
+          return categoryMatch && searchMatch;
+        });
+
+        // Skip rendering folder if empty during searching/filtering
+        if (folderCards.length === 0 && (searchQuery !== '' || activeFilter !== 'all')) {
+          return;
+        }
+
+        visibleFolders++;
+
+        // Folder HTML Structure
+        const folderDiv = document.createElement('div');
+        folderDiv.className = `relative bg-white dark:bg-slate-800 rounded-3xl p-6 shadow-md border ${isEditMode ? 'border-dashed border-emerald-400 dark:border-emerald-700/80 bg-emerald-500/[0.01]' : 'border-slate-100 dark:border-slate-800/80'} transition-all duration-300`;
+        folderDiv.id = `folder-wrapper-${folder.id}`;
+
+        // Color badge for dynamic folder visual cues
+        const folderColors = ["bg-emerald-500", "bg-indigo-500", "bg-sky-500", "bg-purple-500", "bg-rose-500"];
+        const folderColor = folderColors[folders.indexOf(folder) % folderColors.length];
+
+        // Folder Header
+        folderDiv.innerHTML = `
+          <!-- Hanging Folder Tab Graphic -->
+          <div class="absolute top-0 left-6 -translate-y-[90%] ${folderColor} text-white font-bold text-xs sm:text-sm px-5 py-2.5 rounded-t-2xl shadow-sm flex items-center gap-2 border-t border-x border-white/10">
+            <i data-lucide="folder" class="w-4 h-4"></i>
+            <span>${folder.name}</span>
+            <span class="bg-black/20 text-[11px] px-2 py-0.5 rounded-full font-medium ml-1">${folderCards.length}</span>
+          </div>
+
+          <!-- Folder Inner Header -->
+          <div class="border-b border-slate-100 dark:border-slate-700/50 pb-4 mb-6 flex items-start justify-between gap-4">
+            <div>
+              <h2 class="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                <span>${folder.name}</span>
+              </h2>
+              <p class="text-xs text-slate-400 dark:text-slate-400 mt-1">${folder.desc || 'ไม่มีคำอธิบายเพิ่มเติม'}</p>
+            </div>
+            
+            <!-- Folder Actions (If in Edit Mode) -->
+            ${isEditMode ? `
+              <div class="flex items-center gap-2">
+                <button onclick="openFolderModal('${folder.id}')" class="p-1.5 text-slate-400 hover:text-blue-500 transition-colors" title="แก้ไขแฟ้มสะสมงาน">
+                  <i data-lucide="edit-3" class="w-4 h-4"></i>
+                </button>
+                <button onclick="deleteFolder('${folder.id}')" class="p-1.5 text-slate-400 hover:text-red-500 transition-colors" title="ลบแฟ้มสะสมงาน">
+                  <i data-lucide="trash-2" class="w-4 h-4"></i>
+                </button>
+              </div>
+            ` : ''}
+          </div>
+
+          <!-- Cards Grid -->
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6" id="grid-${folder.id}" data-folder-id="${folder.id}">
+            <!-- Card elements will be appended here -->
+          </div>
+        `;
+
+        container.appendChild(folderDiv);
+
+        // Render Cards Inside Folder
+        const gridElement = document.getElementById(`grid-${folder.id}`);
+        
+        folderCards.forEach(card => {
+          const cardCat = categories.find(c => c.id === card.categoryId) || { name: 'อื่นๆ', color: 'slate' };
+          
+          // Badge Color Map
+          const badgeColors = {
+            sky: "bg-sky-100 text-sky-700 dark:bg-sky-950 dark:text-sky-300",
+            indigo: "bg-indigo-100 text-indigo-700 dark:bg-indigo-950 dark:text-indigo-300",
+            emerald: "bg-emerald-100 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300",
+            rose: "bg-rose-100 text-rose-700 dark:bg-rose-950 dark:text-rose-300",
+            yellow: "bg-yellow-100 text-yellow-700 dark:bg-yellow-950 dark:text-yellow-300",
+            teal: "bg-teal-100 text-teal-700 dark:bg-teal-950 dark:text-teal-300",
+            pink: "bg-pink-100 text-pink-700 dark:bg-pink-950 dark:text-pink-300",
+            purple: "bg-purple-100 text-purple-700 dark:bg-purple-950 dark:text-purple-300",
+            slate: "bg-slate-100 text-slate-700 dark:bg-slate-900 dark:text-slate-400"
+          };
+
+          const badgeClass = badgeColors[cardCat.color] || badgeColors.slate;
+
+          const cardDiv = document.createElement('div');
+          cardDiv.className = `group bg-slate-50 dark:bg-slate-900 rounded-2xl p-5 border ${isEditMode ? 'border-emerald-200 dark:border-emerald-900/60' : 'border-slate-100 dark:border-slate-800/80 hover:border-emerald-500/30'} transition-all duration-300 flex flex-col justify-between`;
+          cardDiv.dataset.id = card.id;
+
+          // Build Dynamic Links HTML
+          let linksHTML = '';
+          if (card.links && Array.isArray(card.links)) {
+            card.links.forEach((link, idx) => {
+              if (idx === 0) {
+                // Primary button
+                linksHTML += `
+                  <a href="${link.url}" target="_blank" rel="noopener" class="flex items-center justify-center gap-2 w-full bg-emerald-500 hover:bg-emerald-600 text-white font-semibold py-2.5 px-3 rounded-xl shadow-sm shadow-emerald-500/10 active:scale-95 transition-all text-xs min-h-[38px]">
+                    <span class="text-center leading-tight whitespace-normal break-words">${link.text}</span>
+                    <i data-lucide="external-link" class="w-3.5 h-3.5 shrink-0"></i>
+                  </a>
+                `;
+              } else {
+                // Secondary button
+                linksHTML += `
+                  <a href="${link.url}" target="_blank" rel="noopener" class="flex items-center justify-center gap-2 w-full bg-white border border-slate-200 dark:border-slate-800 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 font-semibold py-2.5 px-3 rounded-xl active:scale-95 transition-all text-xs min-h-[38px]">
+                    <span class="text-center leading-tight whitespace-normal break-words">${link.text}</span>
+                    <i data-lucide="external-link" class="w-3.5 h-3.5 shrink-0"></i>
+                  </a>
+                `;
+              }
+            });
+          }
+
+          cardDiv.innerHTML = `
+            <div>
+              <!-- Grab / Drag Handle -->
+              <div class="drag-handle flex items-center justify-between mb-4 bg-white dark:bg-slate-800 px-3 py-1.5 rounded-lg border border-slate-100 dark:border-slate-800 cursor-grab active:cursor-grabbing transition-colors" title="ลากเพื่อย้ายตําแหน่ง">
+                <div class="flex items-center gap-1.5 text-slate-400">
+                  <span class="text-lg">⠿</span>
+                  <span class="text-[10px] font-semibold tracking-wide uppercase">ลากย้าย</span>
+                </div>
+                <div class="flex items-center gap-1.5">
+                  <span class="px-2 py-0.5 text-[10px] font-bold rounded ${badgeClass}">${cardCat.name}</span>
+                  ${isEditMode ? `
+                    <button onclick="openCardModal('${card.id}')" class="p-0.5 text-slate-400 hover:text-blue-500 transition-colors" title="แก้ไขการ์ด">
+                      <i data-lucide="edit-2" class="w-3.5 h-3.5"></i>
+                    </button>
+                    <button onclick="deleteCard('${card.id}')" class="p-0.5 text-slate-400 hover:text-red-500 transition-colors" title="ลบการ์ด">
+                      <i data-lucide="trash" class="w-3.5 h-3.5"></i>
+                    </button>
+                  ` : ''}
+                </div>
+              </div>
+
+              <!-- Main Card Body -->
+              <div class="flex items-start gap-3">
+                <span class="text-2xl mt-0.5">${card.emoji || '🩺'}</span>
+                <div>
+                  <h3 class="text-base font-bold text-slate-950 dark:text-white group-hover:text-emerald-500 transition-colors">${card.title}</h3>
+                  <p class="text-[11px] font-semibold text-slate-400 mt-0.5">${card.subtitle}</p>
+                </div>
+              </div>
+              <p class="text-xs text-slate-500 dark:text-slate-400 mt-3 leading-relaxed">
+                ${card.desc}
+              </p>
+            </div>
+
+            <!-- Links list container -->
+            <div class="mt-6 space-y-2">
+              ${linksHTML}
+            </div>
+          `;
+
+          gridElement.appendChild(cardDiv);
+        });
+
+        // Initialize Sortable for this specific grid (Only when not filtering or searching)
+        if (searchQuery === '' && activeFilter === 'all') {
+          const sortable = new Sortable(gridElement, {
+            group: 'shared-folders', // Allows dragging cards between folders as well!
+            animation: 250,
+            easing: "cubic-bezier(0.2, 0, 0, 1)",
+            ghostClass: "sortable-ghost",
+            chosenClass: "sortable-chosen",
+            dragClass: "sortable-drag",
+            handle: ".drag-handle",
+            onStart: function() {
+              if (navigator.vibrate) navigator.vibrate(15);
+            },
+            onEnd: function(evt) {
+              const fromFolderId = evt.from.dataset.folderId;
+              const toFolderId = evt.to.dataset.folderId;
+              const cardId = evt.item.dataset.id;
+
+              // Find and update card folderId if moved across folders
+              if (fromFolderId !== toFolderId) {
+                const targetCard = cards.find(c => c.id === cardId);
+                if (targetCard) targetCard.folderId = toFolderId;
+              }
+
+              // Reorder in-memory cards array based on active DOM order
+              let reorderedCards = [];
+              folders.forEach(f => {
+                const fGrid = document.getElementById(`grid-${f.id}`);
+                if (fGrid) {
+                  const orderedIds = [...fGrid.children].map(c => c.dataset.id);
+                  orderedIds.forEach(id => {
+                    const foundCard = cards.find(c => c.id === id);
+                    if (foundCard) reorderedCards.push(foundCard);
+                  });
+                }
+              });
+
+              // Add back any cards that might be hidden or filtered out
+              cards.forEach(c => {
+                if (!reorderedCards.find(rc => rc.id === c.id)) {
+                  reorderedCards.push(c);
+                }
+              });
+
+              cards = reorderedCards;
+              saveState();
+              showToast("บันทึกตำแหน่งลำดับบอร์ดเสร็จสิ้น!");
+            }
+          });
+          sortableInstances.push(sortable);
+        }
+      });
+
+      // Show/Hide empty state if there are zero visible folders
+      if (visibleFolders === 0) {
+        document.getElementById('emptyState').classList.remove('hidden');
+        document.getElementById('emptyState').classList.add('flex');
+      } else {
+        document.getElementById('emptyState').classList.add('hidden');
+        document.getElementById('emptyState').classList.remove('flex');
+      }
+
+      // Re-initialize Lucide Icons on dynamic DOM elements
+      lucide.createIcons();
+    }
+
+    // -----------------------------------------------------------------
+    // CATEGORY FILTERS CONTROLLERS
+    // -----------------------------------------------------------------
+    function renderCategoryTabs() {
+      const container = document.getElementById('categoryFilters');
+      container.innerHTML = '';
+
+      // All Tab
+      const allBtn = document.createElement('button');
+      allBtn.dataset.filter = 'all';
+      allBtn.className = `filter-tab px-4 py-2 text-xs sm:text-sm font-semibold rounded-lg transition-all ${activeFilter === 'all' ? 'bg-emerald-500 text-white shadow-sm shadow-emerald-500/20' : 'bg-slate-100 text-slate-600 hover:bg-slate-200/70 dark:bg-slate-900 dark:text-slate-400 dark:hover:bg-slate-700'}`;
+      allBtn.innerHTML = `ทั้งหมด (<span id="count-all">0</span>)`;
+      container.appendChild(allBtn);
+
+      // Render Dynamic Custom Categories
+      categories.forEach(cat => {
+        const catBtn = document.createElement('button');
+        catBtn.dataset.filter = cat.id;
+        catBtn.className = `filter-tab px-4 py-2 text-xs sm:text-sm font-semibold rounded-lg transition-all ${activeFilter === cat.id ? 'bg-emerald-500 text-white shadow-sm shadow-emerald-500/20' : 'bg-slate-100 text-slate-600 hover:bg-slate-200/70 dark:bg-slate-900 dark:text-slate-400 dark:hover:bg-slate-700'}`;
+        catBtn.innerHTML = `${cat.name} (<span id="count-${cat.id}">0</span>)`;
+        container.appendChild(catBtn);
+      });
+
+      updateCategoryCounts();
+    }
+
+    function updateCategoryCounts() {
+      const allCount = cards.length;
+      const countAllEl = document.getElementById('count-all');
+      if (countAllEl) countAllEl.innerText = allCount;
+
+      categories.forEach(cat => {
+        const catCount = cards.filter(c => c.categoryId === cat.id).length;
+        const countEl = document.getElementById(`count-${cat.id}`);
+        if (countEl) countEl.innerText = catCount;
+      });
+    }
+
+    // -----------------------------------------------------------------
+    // EDIT DIALOG MODALS ENGINE (Vanilla Popup Modals)
+    // -----------------------------------------------------------------
+    function openModal(title, bodyHTML, onSaveCallback, saveBtnText = "บันทึกการแก้ไข") {
+      document.getElementById('modalTitle').innerText = title;
+      document.getElementById('modalBody').innerHTML = bodyHTML;
+      
+      const saveBtn = document.getElementById('saveModalBtn');
+      saveBtn.innerText = saveBtnText;
+
+      // Clone save button to remove previous event listeners cleanly
+      const newSaveBtn = saveBtn.cloneNode(true);
+      saveBtn.parentNode.replaceChild(newSaveBtn, saveBtn);
+
+      newSaveBtn.addEventListener('click', () => {
+        if (onSaveCallback()) {
+          closeModal();
+        }
+      });
+
+      const modal = document.getElementById('configModal');
+      modal.classList.remove('opacity-0', 'pointer-events-none');
+      modal.querySelector('.transform').classList.remove('scale-95');
+      modal.querySelector('.transform').classList.add('scale-100');
+    }
+
+    function closeModal() {
+      const modal = document.getElementById('configModal');
+      modal.classList.add('opacity-0', 'pointer-events-none');
+      modal.querySelector('.transform').classList.remove('scale-100');
+      modal.querySelector('.transform').classList.add('scale-95');
+    }
+
+    // -----------------------------------------------------------------
+    // FOLDER CRUD OPERATOR
+    // -----------------------------------------------------------------
+    function openFolderModal(folderId = null) {
+      const isEdit = folderId !== null;
+      const folder = isEdit ? folders.find(f => f.id === folderId) : { name: '', desc: '' };
+
+      const bodyHTML = `
+        <div class="space-y-4">
+          <div>
+            <label class="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1">ชื่อแฟ้มสะสมงาน</label>
+            <input type="text" id="fName" value="${folder.name}" placeholder="เช่น 🏥 แฟ้มงานวิชาการและวิจัย" class="w-full px-4 py-2.5 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:outline-none text-slate-900 dark:text-white" />
+          </div>
+          <div>
+            <label class="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1">คำอธิบายย่อ</label>
+            <textarea id="fDesc" rows="3" placeholder="ระบุขอบเขตงานหรือรายละเอียดประกอบแฟ้ม..." class="w-full px-4 py-2.5 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:outline-none text-slate-900 dark:text-white">${folder.desc}</textarea>
+          </div>
+        </div>
+      `;
+
+      openModal(isEdit ? 'แก้ไขแฟ้มสะสมงาน' : 'เพิ่มแฟ้มสะสมงานใหม่', bodyHTML, () => {
+        const name = document.getElementById('fName').value.trim();
+        const desc = document.getElementById('fDesc').value.trim();
+
+        if (!name) {
+          showToast("กรุณากรอกชื่อแฟ้มสะสมงานด้วยครับ");
+          return false;
+        }
+
+        if (isEdit) {
+          const target = folders.find(f => f.id === folderId);
+          if (target) {
+            target.name = name;
+            target.desc = desc;
+          }
+        } else {
+          folders.push({
+            id: 'folder-' + Date.now(),
+            name: name,
+            desc: desc
+          });
+        }
+
+        saveState();
+        renderDashboard();
+        showToast("บันทึกข้อมูลแฟ้มสะสมงานสำเร็จ!");
+        return true;
+      });
+    }
+
+    function deleteFolder(folderId) {
+      // Find cards in this folder
+      const insideCards = cards.filter(c => c.folderId === folderId);
+      let confirmMsg = `คุณแน่ใจหรือไม่ที่จะลบแฟ้มนี้?`;
+      if (insideCards.length > 0) {
+        confirmMsg = `⚠️ แฟ้มนี้บรรจุโปรเจกต์อยู่จำนวน ${insideCards.length} ชิ้น หากต้องการลบ แฟ้มและโปรเจกต์ด้านในจะหายไปทั้งหมด! ยืนยันที่จะดำเนินการหรือไม่?`;
+      }
+
+      const bodyHTML = `
+        <div class="text-center py-4 space-y-3">
+          <div class="text-red-500 text-4xl">⚠️</div>
+          <p class="font-semibold text-slate-900 dark:text-white">${confirmMsg}</p>
+        </div>
+      `;
+
+      openModal('ยืนยันการลบแฟ้มสะสมงาน', bodyHTML, () => {
+        // Remove folder
+        folders = folders.filter(f => f.id !== folderId);
+        // Remove associated cards
+        cards = cards.filter(c => c.folderId !== folderId);
+
+        saveState();
+        renderDashboard();
+        showToast("ลบแฟ้มสะสมงานออกเรียบร้อยแล้ว!");
+        return true;
+      });
+    }
+
+    // -----------------------------------------------------------------
+    // CATEGORY CRUD OPERATOR
+    // -----------------------------------------------------------------
+    function openCategoryModal() {
+      // Build dynamic editor list for managing current categories
+      let catListHTML = '';
+      categories.forEach(cat => {
+        catListHTML += `
+          <div class="flex items-center gap-3 p-3 bg-slate-50 dark:bg-slate-900 rounded-xl">
+            <span class="w-4 h-4 rounded-full bg-${cat.color}-400 shrink-0"></span>
+            <input type="text" value="${cat.name}" id="cat-input-${cat.id}" class="flex-1 bg-transparent border-none p-0 font-medium text-slate-800 dark:text-slate-100 focus:outline-none focus:ring-0 text-sm" />
+            <select id="cat-color-${cat.id}" class="bg-white dark:bg-slate-800 text-xs rounded border border-slate-200 dark:border-slate-700 py-1 px-1.5 focus:outline-none">
+              <option value="sky" ${cat.color === 'sky' ? 'selected' : ''}>สีฟ้า</option>
+              <option value="indigo" ${cat.color === 'indigo' ? 'selected' : ''}>สีน้ำเงิน</option>
+              <option value="emerald" ${cat.color === 'emerald' ? 'selected' : ''}>สีเขียว</option>
+              <option value="rose" ${cat.color === 'rose' ? 'selected' : ''}>สีแดง</option>
+              <option value="yellow" ${cat.color === 'yellow' ? 'selected' : ''}>สีเหลือง</option>
+              <option value="teal" ${cat.color === 'teal' ? 'selected' : ''}>สีเขียวหัวเป็ด</option>
+              <option value="pink" ${cat.color === 'pink' ? 'selected' : ''}>สีชมพู</option>
+              <option value="purple" ${cat.color === 'purple' ? 'selected' : ''}>สีม่วง</option>
+              <option value="slate" ${cat.color === 'slate' ? 'selected' : ''}>สีเทา</option>
+            </select>
+            <button onclick="deleteCategory('${cat.id}')" class="text-slate-400 hover:text-red-500 transition-colors">
+              <i data-lucide="trash-2" class="w-4 h-4"></i>
+            </button>
+          </div>
+        `;
+      });
+
+      const bodyHTML = `
+        <div class="space-y-4">
+          <div class="flex items-center justify-between">
+            <h4 class="font-bold text-slate-900 dark:text-white">รายการหมวดหมู่ย่อยปัจจุบัน</h4>
+            <button onclick="addNewCategoryRow()" class="text-xs font-bold text-emerald-500 hover:text-emerald-600 flex items-center gap-1">
+              <i data-lucide="plus" class="w-3.5 h-3.5"></i>เพิ่มหมวดหมู่ใหม่
+            </button>
+          </div>
+          <div class="space-y-2 max-h-64 overflow-y-auto" id="categoriesEditList">
+            ${catListHTML}
+          </div>
+          <p class="text-[11px] text-slate-400">หมายเหตุ: เพื่อความเป็นระเบียบเรียบร้อย เมื่อลบหมวดหมู่ใดๆ ออก โปรเจกต์ที่ผูกอยู่จะเปลี่ยนไปจัดหมวดหมู่อยู่ในกลุ่ม 'อื่นๆ' (ทั่วไป) โดยอัตโนมัติ</p>
+        </div>
+      `;
+
+      openModal('จัดการหมวดหมู่ย่อย', bodyHTML, () => {
+        // Save editing of categories
+        categories.forEach(cat => {
+          const nameInput = document.getElementById(`cat-input-${cat.id}`);
+          const colorSel = document.getElementById(`cat-color-${cat.id}`);
+          if (nameInput) {
+            cat.name = nameInput.value.trim();
+          }
+          if (colorSel) {
+            cat.color = colorSel.value;
+          }
+        });
+
+        // Clean up categories with empty names
+        categories = categories.filter(cat => cat.name.trim() !== '');
+
+        saveState();
+        renderCategoryTabs();
+        renderDashboard();
+        showToast("ปรับปรุงหมวดหมู่ย่อยสำเร็จ!");
+        return true;
+      });
+
+      // Rerun lucide on newly rendered dynamic list
+      lucide.createIcons();
+    }
+
+    function addNewCategoryRow() {
+      const container = document.getElementById('categoriesEditList');
+      const newId = 'cat-' + Date.now();
+      const newRow = document.createElement('div');
+      newRow.className = "flex items-center gap-3 p-3 bg-slate-50 dark:bg-slate-900 rounded-xl";
+      newRow.innerHTML = `
+        <span class="w-4 h-4 rounded-full bg-emerald-400 shrink-0"></span>
+        <input type="text" placeholder="ชื่อหมวดหมู่ใหม่..." id="cat-input-${newId}" class="flex-1 bg-transparent border-none p-0 font-medium text-slate-800 dark:text-slate-100 focus:outline-none focus:ring-0 text-sm" />
+        <select id="cat-color-${newId}" class="bg-white dark:bg-slate-800 text-xs rounded border border-slate-200 dark:border-slate-700 py-1 px-1.5 focus:outline-none">
+          <option value="emerald" selected>สีเขียว</option>
+          <option value="sky">สีฟ้า</option>
+          <option value="indigo">สีน้ำเงิน</option>
+          <option value="rose">สีแดง</option>
+          <option value="yellow">สีเหลือง</option>
+          <option value="teal">สีเขียวหัวเป็ด</option>
+          <option value="pink">สีชมพู</option>
+          <option value="purple">สีม่วง</option>
+          <option value="slate">สีเทา</option>
+        </select>
+        <button onclick="this.parentElement.remove()" class="text-slate-400 hover:text-red-500 transition-colors">
+          <i data-lucide="trash-2" class="w-4 h-4"></i>
+        </button>
+      `;
+      container.appendChild(newRow);
+      
+      // Add into dynamic cache array temporarily so the global modal save action handles it seamlessly
+      categories.push({
+        id: newId,
+        name: '',
+        color: 'emerald'
+      });
+
+      lucide.createIcons();
+    }
+
+    function deleteCategory(catId) {
+      categories = categories.filter(c => c.id !== catId);
+      
+      // Update any card associated to fallback "slate" default color
+      cards.forEach(c => {
+        if (c.categoryId === catId) c.categoryId = 'slate'; 
+      });
+
+      // Refresh categories manager view
+      openCategoryModal();
+    }
+
+    // -----------------------------------------------------------------
+    // CARDS CRUD OPERATOR
+    // -----------------------------------------------------------------
+    let linkEditCount = 0;
+
+    function openCardModal(cardId = null) {
+      const isEdit = cardId !== null;
+      const card = isEdit ? cards.find(c => c.id === cardId) : {
+        emoji: '🩺', title: '', subtitle: '', desc: '', folderId: folders[0]?.id || '', categoryId: categories[0]?.id || '', links: [{ text: '', url: '' }]
+      };
+
+      linkEditCount = card.links ? card.links.length : 0;
+
+      // Populate Folder Select Choices
+      let folderOptions = '';
+      folders.forEach(f => {
+        folderOptions += `<option value="${f.id}" ${card.folderId === f.id ? 'selected' : ''}>${f.name}</option>`;
+      });
+
+      // Populate Category Select Choices
+      let categoryOptions = '';
+      categories.forEach(c => {
+        categoryOptions += `<option value="${c.id}" ${card.categoryId === c.id ? 'selected' : ''}>${c.name}</option>`;
+      });
+
+      // Build Link Inputs list
+      let linksListHTML = '';
+      if (card.links && Array.isArray(card.links)) {
+        card.links.forEach((l, i) => {
+          linksListHTML += `
+            <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 p-3 bg-slate-50 dark:bg-slate-900 rounded-xl" id="link-row-${i}">
+              <input type="text" value="${l.text}" placeholder="ชื่อปุ่มกด (เช่น เปิดโปรแกรม)" id="link-text-${i}" class="flex-1 px-3 py-1.5 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg focus:outline-none focus:ring-1 focus:ring-emerald-500 text-xs text-slate-850 dark:text-white" />
+              <input type="url" value="${l.url}" placeholder="URL ลิงก์ปลายทาง" id="link-url-${i}" class="flex-[2] px-3 py-1.5 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg focus:outline-none focus:ring-1 focus:ring-emerald-500 text-xs text-slate-850 dark:text-white" />
+              <button type="button" onclick="removeLinkInput(${i})" class="text-slate-400 hover:text-red-500 p-1 self-end sm:self-auto shrink-0">
+                <i data-lucide="trash-2" class="w-4 h-4"></i>
+              </button>
+            </div>
+          `;
+        });
+      }
+
+      const bodyHTML = `
+        <div class="space-y-4">
+          <!-- Main details row -->
+          <div class="grid grid-cols-4 gap-3">
+            <div class="col-span-1">
+              <label class="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1">ไอคอน (Emoji)</label>
+              <input type="text" id="cEmoji" value="${card.emoji || '🩺'}" maxlength="4" class="w-full text-center px-2 py-2.5 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:outline-none text-slate-900 dark:text-white" />
+            </div>
+            <div class="col-span-3">
+              <label class="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1">ชื่อโปรเจกต์</label>
+              <input type="text" id="cTitle" value="${card.title}" placeholder="เช่น Warfarin Saved Note" class="w-full px-4 py-2.5 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:outline-none text-slate-900 dark:text-white" />
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1">คำบรรยายย่อย (เช่น ชื่อผู้จัดทำ/ฝ่าย)</label>
+            <input type="text" id="cSubtitle" value="${card.subtitle}" placeholder="เช่น เภสัชกรเอ็นดู • แผนกไอที" class="w-full px-4 py-2.5 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:outline-none text-slate-900 dark:text-white" />
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1">คำอธิบายรายละเอียดโปรเจกต์</label>
+            <textarea id="cDesc" rows="3" placeholder="ระบุวัตถุประสงค์และประโยชน์สั้นๆ เพื่อให้สืบค้นง่าย..." class="w-full px-4 py-2.5 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:outline-none text-slate-900 dark:text-white">${card.desc || ''}</textarea>
+          </div>
+
+          <!-- Select lists row -->
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label class="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1">จัดเก็บลงแฟ้มสะสมงาน</label>
+              <select id="cFolder" class="w-full px-3 py-2.5 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl focus:outline-none text-slate-900 dark:text-white text-xs">
+                ${folderOptions}
+              </select>
+            </div>
+            <div>
+              <label class="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1">กลุ่มหมวดหมู่</label>
+              <select id="cCategory" class="w-full px-3 py-2.5 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl focus:outline-none text-slate-900 dark:text-white text-xs">
+                ${categoryOptions}
+              </select>
+            </div>
+          </div>
+
+          <!-- Dynamic Link Inputs List -->
+          <div class="border-t border-slate-100 dark:border-slate-700/50 pt-4 space-y-2">
+            <div class="flex justify-between items-center">
+              <label class="block text-xs font-bold uppercase tracking-wider text-slate-400">ปุ่มลิงก์นำทางของโปรเจกต์</label>
+              <button type="button" onclick="addNewLinkInputRow()" class="text-xs font-bold text-emerald-500 hover:text-emerald-600 flex items-center gap-1">
+                <i data-lucide="plus" class="w-3.5 h-3.5"></i>เพิ่มลิงก์เปิดงาน
+              </button>
+            </div>
+            <div id="cardLinksEditList" class="space-y-2">
+              ${linksListHTML}
+            </div>
+          </div>
+        </div>
+      `;
+
+      openModal(isEdit ? 'แก้ไขรายละเอียดโปรเจกต์' : 'สร้างการ์ดโปรเจกต์ใหม่', bodyHTML, () => {
+        const title = document.getElementById('cTitle').value.trim();
+        const subtitle = document.getElementById('cSubtitle').value.trim();
+        const desc = document.getElementById('cDesc').value.trim();
+        const emoji = document.getElementById('cEmoji').value.trim();
+        const folderId = document.getElementById('cFolder').value;
+        const categoryId = document.getElementById('cCategory').value;
+
+        if (!title) {
+          showToast("กรุณากรอกชื่อโปรเจกต์ด้วยครับ");
+          return false;
+        }
+
+        // Gather link values
+        const parsedLinks = [];
+        for (let i = 0; i < linkEditCount; i++) {
+          const lTextEl = document.getElementById(`link-text-${i}`);
+          const lUrlEl = document.getElementById(`link-url-${i}`);
+          if (lTextEl && lUrlEl) {
+            const text = lTextEl.value.trim();
+            const url = lUrlEl.value.trim();
+            if (text && url) {
+              parsedLinks.push({ text, url });
+            }
+          }
+        }
+
+        if (parsedLinks.length === 0) {
+          showToast("อย่างน้อยต้องระบุลิงก์เปิดงานอย่างน้อย 1 ปลายทางนะครับ");
+          return false;
+        }
+
+        if (isEdit) {
+          const target = cards.find(c => c.id === cardId);
+          if (target) {
+            target.title = title;
+            target.subtitle = subtitle;
+            target.desc = desc;
+            target.emoji = emoji;
+            target.folderId = folderId;
+            target.categoryId = categoryId;
+            target.links = parsedLinks;
+          }
+        } else {
+          cards.push({
+            id: 'card-' + Date.now(),
+            title,
+            subtitle,
+            desc,
+            emoji,
+            folderId,
+            categoryId,
+            links: parsedLinks
+          });
+        }
+
+        saveState();
+        renderDashboard();
+        showToast("บันทึกการปรับแต่งโปรเจกต์สำเร็จ!");
+        return true;
+      });
+
+      lucide.createIcons();
+    }
+
+    function addNewLinkInputRow() {
+      const container = document.getElementById('cardLinksEditList');
+      const idx = linkEditCount;
+      const newRow = document.createElement('div');
+      newRow.className = "flex flex-col sm:flex-row items-stretch sm:items-center gap-2 p-3 bg-slate-50 dark:bg-slate-900 rounded-xl";
+      newRow.id = `link-row-${idx}`;
+      newRow.innerHTML = `
+        <input type="text" placeholder="ชื่อปุ่มกด (เช่น เปิดโปรแกรม)" id="link-text-${idx}" class="flex-1 px-3 py-1.5 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg focus:outline-none focus:ring-1 focus:ring-emerald-500 text-xs text-slate-850 dark:text-white" />
+        <input type="url" placeholder="URL ลิงก์ปลายทาง" id="link-url-${idx}" class="flex-[2] px-3 py-1.5 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg focus:outline-none focus:ring-1 focus:ring-emerald-500 text-xs text-slate-850 dark:text-white" />
+        <button type="button" onclick="removeLinkInput(${idx})" class="text-slate-400 hover:text-red-500 p-1 self-end sm:self-auto shrink-0">
+          <i data-lucide="trash-2" class="w-4 h-4"></i>
+        </button>
+      `;
+      container.appendChild(newRow);
+      linkEditCount++;
+      lucide.createIcons();
+    }
+
+    function removeLinkInput(idx) {
+      const row = document.getElementById(`link-row-${idx}`);
+      if (row) {
+        row.remove();
+      }
+    }
+
+    function deleteCard(cardId) {
+      const targetCard = cards.find(c => c.id === cardId);
+      if (!targetCard) return;
+
+      const bodyHTML = `
+        <div class="text-center py-4 space-y-3">
+          <div class="text-red-500 text-4xl">⚠️</div>
+          <p class="font-semibold text-slate-900 dark:text-white">ต้องการยืนยันการลบโปรเจกต์ "${targetCard.title}" หรือไม่?</p>
+        </div>
+      `;
+
+      openModal('ลบการ์ดโปรเจกต์', bodyHTML, () => {
+        cards = cards.filter(c => c.id !== cardId);
+        saveState();
+        renderDashboard();
+        showToast("ลบโปรเจกต์เสร็จสิ้น!");
+        return true;
+      });
+    }
+
+    // ==========================================
+    // 🌗 4. LIGHT/DARK THEME CONTROLLER
+    // ==========================================
+    function initTheme() {
+      const savedTheme = localStorage.getItem(STORE_THEME);
+      const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      
+      if (savedTheme === 'dark' || (!savedTheme && systemPrefersDark)) {
+        document.documentElement.classList.add('dark');
+        updateThemeIcon(true);
+      } else {
+        document.documentElement.classList.remove('dark');
+        updateThemeIcon(false);
+      }
+    }
+
+    function updateThemeIcon(isDark) {
+      if (isDark) {
+        themeIcon.setAttribute('data-lucide', 'sun');
+      } else {
+        themeIcon.setAttribute('data-lucide', 'moon');
+      }
+      lucide.createIcons();
+    }
+
+    themeToggleBtn.addEventListener('click', () => {
+      const isDark = document.documentElement.classList.toggle('dark');
+      localStorage.setItem(STORE_THEME, isDark ? 'dark' : 'light');
+      updateThemeIcon(isDark);
+      showToast(isDark ? "สลับเข้าสู่โหมดกลางคืน 🌙" : "สลับเข้าสู่โหมดกลางวัน ☀️");
+    });
+
+    // ==========================================
+    // 💬 5. REAL-TIME SEARCH & EVENT LISTENERS
+    // ==========================================
+    searchInput.addEventListener('input', (e) => {
+      searchQuery = e.target.value;
+      if (searchQuery) {
+        clearSearchBtn.classList.remove('hidden');
+      } else {
+        clearSearchBtn.classList.add('hidden');
+      }
+      renderDashboard();
+    });
+
+    clearSearchBtn.addEventListener('click', () => {
+      searchInput.value = '';
+      searchQuery = '';
+      clearSearchBtn.classList.add('hidden');
+      renderDashboard();
+    });
+
+    // Handle filter tabs selection
+    categoryFilters.addEventListener('click', (e) => {
+      const tab = e.target.closest('.filter-tab');
+      if (!tab) return;
+
+      document.querySelectorAll('.filter-tab').forEach(el => {
+        el.className = 'filter-tab px-4 py-2 text-xs sm:text-sm font-semibold rounded-lg bg-slate-100 text-slate-600 hover:bg-slate-200/70 dark:bg-slate-900 dark:text-slate-400 dark:hover:bg-slate-700 transition-all';
+      });
+
+      tab.className = 'filter-tab px-4 py-2 text-xs sm:text-sm font-semibold rounded-lg bg-emerald-500 text-white shadow-sm shadow-emerald-500/20 transition-all';
+      
+      activeFilter = tab.dataset.filter;
+      renderDashboard();
+    });
+
+    clearAllFiltersBtn.addEventListener('click', () => {
+      searchInput.value = '';
+      searchQuery = '';
+      clearSearchBtn.classList.add('hidden');
+      activeFilter = 'all';
+      renderCategoryTabs();
+      renderDashboard();
+    });
+
+    // Toggle Edit Customization mode
+    document.getElementById('editModeBtn').addEventListener('click', () => {
+      isEditMode = !isEditMode;
+      const toolbar = document.getElementById('customizerToolbar');
+      const textSpan = document.getElementById('editModeText');
+      const icon = document.getElementById('editModeIcon');
+
+      if (isEditMode) {
+        toolbar.classList.remove('hidden');
+        textSpan.innerText = 'ปิดโหมดปรับแต่งบอร์ด';
+        icon.setAttribute('data-lucide', 'check');
+        document.getElementById('editModeBtn').classList.remove('bg-emerald-500', 'hover:bg-emerald-600');
+        document.getElementById('editModeBtn').classList.add('bg-blue-600', 'hover:bg-blue-700');
+        showToast("เข้าสู่โหมดปรับแต่งบอร์ดแล้ว! คุณสามารถแก้ไขชื่อแฟ้ม แก้ไขการ์ด หรือเพิ่มลดโปรเจกต์ได้อิสระครับ");
+      } else {
+        toolbar.classList.add('hidden');
+        textSpan.innerText = 'เปิดโหมดปรับแต่งบอร์ด';
+        icon.setAttribute('data-lucide', 'edit-3');
+        document.getElementById('editModeBtn').classList.remove('bg-blue-600', 'hover:bg-blue-700');
+        document.getElementById('editModeBtn').classList.add('bg-emerald-500', 'hover:bg-emerald-600');
+        showToast("ออกจากโหมดปรับแต่งเสร็จสิ้น บันทึกทุกลำดับเรียบร้อย!");
+      }
+      lucide.createIcons();
+      renderDashboard();
+    });
+
+    // -----------------------------------------------------------------
+    // Export Data Configuration to Code Update (Full HTML)
+    // -----------------------------------------------------------------
+    document.getElementById('exportCodeBtn').addEventListener('click', () => {
+      // 1. จำลองโครงสร้างหน้าเว็บปัจจุบัน
+      const clone = document.documentElement.cloneNode(true);
+
+      // 2. เคลียร์พื้นที่แสดงผลแบบไดนามิกออก เพื่อให้โค้ดใหม่คลีนที่สุด
+      const container = clone.querySelector('#foldersContainer');
+      if (container) container.innerHTML = '\n      <!-- Will be rendered dynamically via renderDashboard() -->\n    ';
+      
+      const catFilters = clone.querySelector('#categoryFilters');
+      if (catFilters) catFilters.innerHTML = '\n        <!-- Will be rendered dynamically -->\n      ';
+
+      const modalBody = clone.querySelector('#modalBody');
+      if (modalBody) modalBody.innerHTML = '\n        <!-- Content will be injected dynamically -->\n      ';
+
+      // 3. รีเซ็ตสถานะปุ่มและ UI ของโหมดแก้ไข
+      const toolbar = clone.querySelector('#customizerToolbar');
+      if (toolbar) toolbar.classList.add('hidden');
+      
+      const editBtn = clone.querySelector('#editModeBtn');
+      if (editBtn) {
+         editBtn.classList.remove('bg-blue-600', 'hover:bg-blue-700');
+         editBtn.classList.add('bg-emerald-500', 'hover:bg-emerald-600');
+      }
+      const editText = clone.querySelector('#editModeText');
+      if (editText) editText.innerText = 'เปิดโหมดปรับแต่งบอร์ด';
+      
+      const editIcon = clone.querySelector('#editModeIcon');
+      if (editIcon) {
+         editIcon.classList.remove('lucide-check');
+         editIcon.classList.add('lucide-edit-3');
+      }
+
+      const emptyState = clone.querySelector('#emptyState');
+      if (emptyState) {
+          emptyState.classList.add('hidden');
+          emptyState.classList.remove('flex');
+      }
+
+      const searchInputClone = clone.querySelector('#searchInput');
+      if (searchInputClone) {
+          searchInputClone.value = '';
+          searchInputClone.removeAttribute('value');
+      }
+
+      const clearSearchBtnClone = clone.querySelector('#clearSearchBtn');
+      if (clearSearchBtnClone) clearSearchBtnClone.classList.add('hidden');
+      
+      // รีเซ็ตหน้าต่าง Modal และ Toast
+      const modal = clone.querySelector('#configModal');
+      if (modal) {
+        modal.classList.add('opacity-0', 'pointer-events-none');
+        const modalTransform = modal.querySelector('.transform');
+        if (modalTransform) {
+           modalTransform.classList.remove('scale-100');
+           modalTransform.classList.add('scale-95');
+        }
+      }
+      
+      const toast = clone.querySelector('#toast');
+      if (toast) {
+        toast.classList.remove('translate-y-0', 'opacity-100');
+        toast.classList.add('translate-y-20', 'opacity-0');
+      }
+
+      // 4. แปลงไอคอน SVG ของ Lucide กลับเป็น <i> tags เพื่อให้ไฟล์โหลดใหม่ถูกต้อง
+      const svgs = clone.querySelectorAll('svg');
+      svgs.forEach(svg => {
+          const classStr = svg.getAttribute('class') || '';
+          const lucideMatch = classStr.match(/lucide-([a-zA-Z0-9-]+)/);
+          
+          if (lucideMatch) {
+              const i = document.createElement('i');
+              i.setAttribute('data-lucide', lucideMatch[1]);
+              
+              const otherClasses = classStr.split(' ').filter(c => c !== 'lucide' && !c.startsWith('lucide-')).join(' ');
+              if (otherClasses) {
+                  i.setAttribute('class', otherClasses);
+              }
+              
+              if (svg.id) i.id = svg.id;
+              svg.replaceWith(i);
+          }
+      });
+
+      // รีเซ็ตคลาส dark mode ให้ใช้ค่าเริ่มต้นตามระบบ (ไม่ hardcode ไว้ตอน export)
+      clone.classList.remove('dark', 'light');
+
+      // 5. ประกอบร่างเป็นโค้ด HTML ทั้งแผ่น
+      let fullHTML = '<!DOCTYPE html>\n' + clone.outerHTML;
+
+      // 6. นำตัวแปร JSON ล่าสุดใส่ทับค่าเดิมในไฟล์
+      const foldersCode = `const defaultFolders = ${JSON.stringify(folders, null, 2)};`;
+      const categoriesCode = `const defaultCategories = ${JSON.stringify(categories, null, 2)};`;
+      const cardsCode = `const defaultCards = ${JSON.stringify(cards, null, 2)};`;
+
+      fullHTML = fullHTML.replace(/const defaultFolders = \[[\s\S]*?\n\];/, foldersCode);
+      fullHTML = fullHTML.replace(/const defaultCategories = \[[\s\S]*?\n\];/, categoriesCode);
+      fullHTML = fullHTML.replace(/const defaultCards = \[[\s\S]*?\n\];/, cardsCode);
+
+      // 7. นำเสนอให้ผู้ใช้งาน
+      const bodyHTML = `
+        <div class="space-y-3">
+          <div class="bg-emerald-50 dark:bg-emerald-900/30 border border-emerald-200 dark:border-emerald-700/50 p-4 rounded-xl flex items-start gap-3">
+            <i data-lucide="info" class="w-5 h-5 text-emerald-600 dark:text-emerald-400 shrink-0 mt-0.5"></i>
+            <div class="text-xs text-emerald-800 dark:text-emerald-300">
+              <p class="font-bold text-sm mb-1">วิธีนำโค้ดทั้งหมดไปใช้งาน</p>
+              <ol class="list-decimal ml-4 space-y-1.5 mt-2">
+                <li>คุณสามารถกดปุ่ม <strong>"คัดลอกโค้ดทั้งหมด"</strong> หรือ <strong>"ดาวน์โหลดเป็นไฟล์ HTML"</strong> ได้เลย</li>
+                <li>ระบบได้ฝังการตั้งค่า ข้อมูลแฟ้ม หมวดหมู่ และโปรเจกต์ล่าสุดไว้ในโค้ดชุดนี้เรียบร้อยแล้ว</li>
+                <li>นำไปวางทับไฟล์เดิมบน GitHub หรือระบบ Host ของคุณเพื่ออัปเดตหน้าเว็บได้ทันที</li>
+              </ol>
+            </div>
+          </div>
+          <textarea id="exportCodeTextarea" rows="12" class="w-full text-[11px] font-mono bg-slate-100 dark:bg-slate-950 text-slate-800 dark:text-slate-300 p-3 rounded-xl border border-slate-200 dark:border-slate-700 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 whitespace-pre" spellcheck="false" readonly></textarea>
+        </div>
+        <div class="mt-4 flex flex-col sm:flex-row gap-2">
+          <button id="downloadHtmlBtn" class="flex-1 px-4 py-3 bg-indigo-500 hover:bg-indigo-600 text-white font-semibold rounded-xl text-sm shadow-md shadow-indigo-500/20 active:scale-95 transition-all flex justify-center items-center gap-2">
+             <i data-lucide="download-cloud" class="w-5 h-5"></i> ดาวน์โหลดเป็นไฟล์ HTML (.html)
+          </button>
+        </div>
+      `;
+
+      openModal('Export โค้ดระบบทั้งหมด (Full HTML)', bodyHTML, () => {
+        const textarea = document.getElementById('exportCodeTextarea');
+        textarea.select();
+        document.execCommand('copy');
+        showToast("คัดลอกโค้ดทั้งหมดเข้า Clipboard แล้ว!");
+        return true;
+      }, "คัดลอกโค้ดทั้งหมด");
+
+      // เอาโค้ดยัดลง textarea แยกเพื่อความสมบูรณ์ของ text string
+      document.getElementById('exportCodeTextarea').value = fullHTML;
+
+      // ผูก Event ให้กับปุ่มดาวน์โหลดไฟล์
+      document.getElementById('downloadHtmlBtn').addEventListener('click', () => {
+        const blob = new Blob([fullHTML], { type: 'text/html;charset=utf-8' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'dashboard-portal.html'; // ตั้งชื่อไฟล์ที่ดาวน์โหลด
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        showToast("ดาวน์โหลดไฟล์ HTML เรียบร้อย! ลองเช็คในโฟลเดอร์ Download ของคุณนะครับ");
+      });
+
+      lucide.createIcons();
+    });
+
+    // Reset All configurations back to default settings
+    document.getElementById('resetAllBtn').addEventListener('click', () => {
+      const bodyHTML = `
+        <div class="text-center py-4 space-y-3">
+          <div class="text-yellow-500 text-4xl">⚠️</div>
+          <p class="font-semibold text-slate-900 dark:text-white">คำเตือน: คุณต้องการล้างการปรับแต่ง (แฟ้มสะสมงาน, หมวดหมู่ และโปรเจกต์ทั้งหมด) เพื่อกลับคืนสู่ค่าเริ่มต้นระบบดั้งเดิมหรือไม่?</p>
+        </div>
+      `;
+
+      openModal('คืนค่าระบบเริ่มต้น', bodyHTML, () => {
+        localStorage.removeItem(STORE_FOLDERS);
+        localStorage.removeItem(STORE_CATEGORIES);
+        localStorage.removeItem(STORE_CARDS);
+        
+        // Force refresh to get new default code instead of cached localStorage
+        loadState();
+        renderCategoryTabs();
+        renderDashboard();
+        showToast("คืนค่าเริ่มต้นเรียบร้อยแล้ว!");
+        return true;
+      });
+    });
+
+    // Toast visual alerts system
+    function showToast(message) {
+      const toast = document.getElementById('toast');
+      const toastMsg = document.getElementById('toastMsg');
+      
+      toastMsg.innerText = message;
+      toast.classList.remove('translate-y-20', 'opacity-0');
+      toast.classList.add('translate-y-0', 'opacity-100');
+      
+      setTimeout(() => {
+        toast.classList.remove('translate-y-0', 'opacity-100');
+        toast.classList.add('translate-y-20', 'opacity-0');
+      }, 3500);
+    }
+
+    // Window Onload Starter Bootstrapper
+    window.onload = function() {
+      initTheme();
+      loadState();
+      renderCategoryTabs();
+      renderDashboard();
+    };
+  </script>
+</body>
+</html>

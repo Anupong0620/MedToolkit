@@ -14,16 +14,23 @@
         extend: {
           fontFamily: {
             sans: ['Sarabun', 'sans-serif'],
+            heading: ['Prompt', 'Sarabun', 'sans-serif'],
+          },
+          colors: {
+            slate: {
+              750: '#243044',
+              850: '#141e30',
+            }
           }
         }
       }
     }
   </script>
 
-  <!-- Google Fonts (Sarabun) -->
+  <!-- Google Fonts (Prompt & Sarabun) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;500;600;700&family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
   <!-- Lucide Icons -->
   <script src="https://unpkg.com/lucide@latest"></script>
@@ -41,81 +48,113 @@
       background: transparent;
     }
     .dark ::-webkit-scrollbar-track {
-      background: #1e293b;
+      background: #0f172a;
     }
     ::-webkit-scrollbar-thumb {
       background: #cbd5e1;
-      border-radius: 4px;
+      border-radius: 9999px;
     }
     .dark ::-webkit-scrollbar-thumb {
-      background: #475569;
+      background: #334155;
     }
     ::-webkit-scrollbar-thumb:hover {
       background: #94a3b8;
     }
 
-    /* Sortable styles */
+    /* Sortable Drag & Drop styles */
     .sortable-ghost {
-      opacity: 0.2;
-      transform: scale(0.95);
+      opacity: 0.25;
+      transform: scale(0.96);
       border: 2px dashed #10b981 !important;
     }
     .sortable-chosen {
-      box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1) !important;
+      box-shadow: 0 25px 30px -5px rgb(0 0 0 / 0.15), 0 10px 15px -6px rgb(0 0 0 / 0.1) !important;
     }
     .sortable-drag {
       cursor: grabbing !important;
     }
+
+    /* Line clamp utilities */
+    .line-clamp-2 {
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .line-clamp-3 {
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
   </style>
 </head>
 
-<body class="bg-[#f8fafc] text-slate-800 transition-colors duration-300 dark:bg-slate-900 dark:text-slate-100 min-h-screen font-sans pb-24">
+<body class="bg-[#f8fafc] text-slate-800 transition-colors duration-300 dark:bg-[#0b1120] dark:text-slate-100 min-h-screen font-sans pb-28 selection:bg-emerald-500 selection:text-white relative">
 
-  <!-- Decorative top bar -->
-  <div class="h-2 bg-gradient-to-r from-emerald-500 via-teal-500 to-sky-600"></div>
+  <!-- Atmospheric Ambient Background Orbs -->
+  <div class="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
+    <div class="absolute -top-32 left-1/2 -translate-x-1/2 w-[850px] h-[450px] bg-gradient-to-tr from-emerald-400/15 via-teal-400/15 to-cyan-400/10 blur-3xl opacity-80 dark:opacity-25"></div>
+    <div class="absolute top-[480px] -left-32 w-[550px] h-[550px] bg-gradient-to-br from-indigo-500/10 to-purple-500/10 blur-3xl opacity-60 dark:opacity-15"></div>
+    <div class="absolute top-[900px] -right-32 w-[600px] h-[600px] bg-gradient-to-tl from-teal-500/10 to-emerald-500/10 blur-3xl opacity-60 dark:opacity-15"></div>
+  </div>
+
+  <!-- Decorative Top Gradient Accent Bar -->
+  <div class="h-1.5 bg-gradient-to-r from-emerald-400 via-teal-500 to-cyan-500 shadow-sm"></div>
 
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8">
     
     <!-- HEADER -->
-    <header class="flex flex-col xl:flex-row xl:items-center xl:justify-between pb-8 mb-8 border-b border-slate-200 dark:border-slate-800 gap-4">
-      <div>
-        <div class="flex items-center gap-3">
-          <div class="p-2.5 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 rounded-2xl">
-            <i data-lucide="layout-grid" class="w-8 h-8"></i>
-          </div>
-          <div>
-            <h1 class="text-2xl sm:text-3xl font-bold tracking-tight bg-gradient-to-r from-slate-900 to-slate-700 dark:from-white dark:to-slate-300 bg-clip-text text-transparent">
+    <header class="flex flex-col xl:flex-row xl:items-center xl:justify-between pb-8 mb-8 border-b border-slate-200/80 dark:border-slate-800/80 gap-6">
+      <div class="flex items-center gap-4">
+        <!-- Logo Icon with glowing ring -->
+        <div class="relative flex items-center justify-center p-3.5 bg-gradient-to-br from-emerald-500 to-teal-600 text-white rounded-2xl shadow-lg shadow-emerald-500/25 ring-4 ring-emerald-500/10 shrink-0">
+          <i data-lucide="layout-grid" class="w-8 h-8"></i>
+        </div>
+        <div>
+          <div class="flex flex-wrap items-center gap-2.5">
+            <h1 class="text-2xl sm:text-3xl font-extrabold tracking-tight bg-gradient-to-r from-slate-900 via-slate-800 to-slate-700 dark:from-white dark:via-slate-100 dark:to-slate-300 bg-clip-text text-transparent font-heading">
               Clinical Suite
             </h1>
-            <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">
-              Endo-Pharma Ecosystem • ศูนย์รวมโปรเจกต์และแอปพลิเคชันสนับสนุนงานคลินิก
-            </p>
+            <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 border border-emerald-500/20">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+              Ecosystem • v2.6
+            </span>
           </div>
+          <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1 font-medium">
+            Endo-Pharma Ecosystem • ศูนย์รวมโปรเจกต์และแอปพลิเคชันสนับสนุนงานคลินิก & เภสัชกรรม
+          </p>
         </div>
       </div>
 
-      <!-- Quick Actions -->
+      <!-- Header Stats & Quick Actions -->
       <div class="flex flex-wrap items-center gap-3">
+        <!-- Live Counters -->
+        <div class="hidden lg:flex items-center gap-2 px-3.5 py-2 bg-white/70 dark:bg-slate-800/70 backdrop-blur-md border border-slate-200/70 dark:border-slate-700/70 rounded-xl text-xs font-semibold text-slate-600 dark:text-slate-300 shadow-sm">
+          <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+          <span>ระบบทั้งหมด: <strong id="statTotalCards" class="text-emerald-600 dark:text-emerald-400 font-bold">15</strong> ระบบ</span>
+        </div>
+
         <!-- Edit Mode Toggle -->
-        <button id="editModeBtn" class="flex items-center gap-2 px-4 py-2.5 text-sm font-semibold text-white bg-emerald-500 hover:bg-emerald-600 dark:bg-emerald-600 dark:hover:bg-emerald-700 rounded-xl shadow-lg shadow-emerald-500/20 active:scale-95 transition-all">
+        <button id="editModeBtn" class="flex items-center gap-2 px-4 py-2.5 text-xs sm:text-sm font-semibold text-white bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 dark:from-emerald-600 dark:to-teal-700 rounded-xl shadow-md shadow-emerald-500/20 hover:shadow-lg hover:shadow-emerald-500/30 active:scale-95 transition-all">
           <i id="editModeIcon" data-lucide="edit-3" class="w-4 h-4"></i>
           <span id="editModeText">เปิดโหมดปรับแต่งบอร์ด</span>
         </button>
 
         <!-- Export Code Button -->
-        <button id="exportCodeBtn" class="flex items-center gap-2 px-4 py-2.5 text-sm font-medium text-blue-700 bg-blue-50 border border-blue-200 rounded-xl hover:bg-blue-100 active:scale-95 transition-all dark:bg-blue-900/30 dark:border-blue-800/50 dark:text-blue-300 dark:hover:bg-blue-900/50" title="Export โค้ดสำหรับอัปเดตขึ้น GitHub">
+        <button id="exportCodeBtn" class="flex items-center gap-2 px-4 py-2.5 text-xs sm:text-sm font-semibold text-sky-700 bg-sky-50 border border-sky-200/80 rounded-xl hover:bg-sky-100/80 active:scale-95 transition-all dark:bg-sky-950/40 dark:border-sky-800/50 dark:text-sky-300 dark:hover:bg-sky-900/50 shadow-sm" title="Export โค้ดสำหรับอัปเดตขึ้น GitHub">
           <i data-lucide="download" class="w-4 h-4"></i>
           <span>Export โค้ด</span>
         </button>
 
         <!-- Reset Button -->
-        <button id="resetAllBtn" class="flex items-center gap-2 px-4 py-2.5 text-sm font-medium text-slate-700 bg-white border border-slate-200 rounded-xl hover:bg-slate-50 active:scale-95 transition-all dark:bg-slate-800 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-700/50" title="คืนค่าเริ่มต้นระบบทั้งหมด">
-          <i data-lucide="rotate-ccw" class="w-4 h-4"></i>
-          <span class="hidden sm:inline">รีเซ็ตค่าเริ่มต้น</span>
+        <button id="resetAllBtn" class="flex items-center gap-2 px-3.5 py-2.5 text-xs sm:text-sm font-medium text-slate-700 bg-white/80 dark:bg-slate-800/80 border border-slate-200/80 dark:border-slate-700 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-700/60 active:scale-95 transition-all shadow-sm" title="คืนค่าเริ่มต้นระบบทั้งหมด">
+          <i data-lucide="rotate-ccw" class="w-4 h-4 text-slate-500"></i>
+          <span class="hidden sm:inline">รีเซ็ต</span>
         </button>
 
         <!-- GitHub Link -->
-        <a href="https://github.com/anupong0620" target="_blank" rel="noopener" class="flex items-center gap-2 px-4 py-2.5 text-sm font-medium text-slate-700 bg-white border border-slate-200 rounded-xl hover:bg-slate-50 active:scale-95 transition-all dark:bg-slate-800 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-700/50" title="ไปที่ GitHub ของฉัน">
+        <a href="https://github.com/anupong0620" target="_blank" rel="noopener" class="flex items-center gap-2 px-3.5 py-2.5 text-xs sm:text-sm font-medium text-slate-700 bg-white/80 dark:bg-slate-800/80 border border-slate-200/80 dark:border-slate-700 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-700/60 active:scale-95 transition-all shadow-sm" title="ไปที่ GitHub ของฉัน">
           <svg class="w-4 h-4" viewBox="0 0 16 16" fill="currentColor">
             <path d="M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-1.12.38-.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z"></path>
           </svg>
@@ -123,31 +162,33 @@
         </a>
 
         <!-- Light/Dark Theme Switcher -->
-        <button id="themeToggleBtn" class="p-2.5 bg-white border border-slate-200 text-slate-700 dark:bg-slate-800 dark:border-slate-700 dark:text-slate-300 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-700/50 active:scale-95 transition-all">
+        <button id="themeToggleBtn" class="p-2.5 bg-white/80 dark:bg-slate-800/80 border border-slate-200/80 dark:border-slate-700 text-slate-700 dark:text-slate-300 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-700/60 active:scale-95 transition-all shadow-sm" title="สลับโหมดกลางวัน/กลางคืน">
           <i id="themeIcon" data-lucide="moon" class="w-5 h-5"></i>
         </button>
       </div>
     </header>
 
     <!-- CUSTOMIZER TOOLBAR (Visible only in edit mode) -->
-    <section id="customizerToolbar" class="hidden mb-8 p-4 bg-emerald-500/5 border border-emerald-500/20 rounded-2xl flex flex-wrap items-center justify-between gap-4">
-      <div class="flex items-center gap-2.5">
+    <section id="customizerToolbar" class="hidden mb-8 p-4 bg-emerald-500/10 border border-emerald-500/30 rounded-2xl flex flex-wrap items-center justify-between gap-4 backdrop-blur-md">
+      <div class="flex items-center gap-3">
         <span class="flex h-3 w-3 relative">
           <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
           <span class="relative inline-flex rounded-full h-3 w-3 bg-emerald-500"></span>
         </span>
-        <span class="text-sm font-semibold text-emerald-800 dark:text-emerald-300">โหมดปรับแต่งบอร์ดกำลังทำงาน: คลิกปุ่มต่างๆ เพื่อเริ่มการแก้ไข</span>
+        <span class="text-xs sm:text-sm font-semibold text-emerald-900 dark:text-emerald-200">
+          🛠️ โหมดปรับแต่งบอร์ด: ลากย้ายการ์ด หรือคลิกปุ่มเพื่อจัดการโครงสร้างได้ทันที
+        </span>
       </div>
-      <div class="flex flex-wrap items-center gap-3">
-        <button onclick="openFolderModal()" class="flex items-center gap-1.5 px-3.5 py-2 text-xs font-bold text-teal-700 bg-teal-50 hover:bg-teal-100 dark:text-teal-300 dark:bg-teal-950/40 rounded-xl transition-all">
+      <div class="flex flex-wrap items-center gap-2.5">
+        <button onclick="openFolderModal()" class="flex items-center gap-1.5 px-3.5 py-2 text-xs font-bold text-teal-700 bg-teal-50 hover:bg-teal-100 dark:text-teal-300 dark:bg-teal-950/60 rounded-xl transition-all border border-teal-200 dark:border-teal-800/50">
           <i data-lucide="folder-plus" class="w-4 h-4"></i>
           <span>＋ เพิ่มแฟ้มสะสมงานใหม่</span>
         </button>
-        <button onclick="openCategoryModal()" class="flex items-center gap-1.5 px-3.5 py-2 text-xs font-bold text-sky-700 bg-sky-50 hover:bg-sky-100 dark:text-sky-300 dark:bg-sky-950/40 rounded-xl transition-all">
+        <button onclick="openCategoryModal()" class="flex items-center gap-1.5 px-3.5 py-2 text-xs font-bold text-sky-700 bg-sky-50 hover:bg-sky-100 dark:text-sky-300 dark:bg-sky-950/60 rounded-xl transition-all border border-sky-200 dark:border-sky-800/50">
           <i data-lucide="tag" class="w-4 h-4"></i>
           <span>＋ จัดการหมวดหมู่ย่อย</span>
         </button>
-        <button onclick="openCardModal()" class="flex items-center gap-1.5 px-3.5 py-2 text-xs font-bold text-indigo-700 bg-indigo-50 hover:bg-indigo-100 dark:text-indigo-300 dark:bg-indigo-950/40 rounded-xl transition-all">
+        <button onclick="openCardModal()" class="flex items-center gap-1.5 px-3.5 py-2 text-xs font-bold text-indigo-700 bg-indigo-50 hover:bg-indigo-100 dark:text-indigo-300 dark:bg-indigo-950/60 rounded-xl transition-all border border-indigo-200 dark:border-indigo-800/50">
           <i data-lucide="plus-circle" class="w-4 h-4"></i>
           <span>＋ สร้างการ์ดโปรเจกต์ใหม่</span>
         </button>
@@ -155,34 +196,37 @@
     </section>
 
     <!-- SEARCH & FILTER CONTROL PANEL -->
-    <section class="mb-12 bg-white dark:bg-slate-800 rounded-2xl p-4 sm:p-6 shadow-sm border border-slate-100 dark:border-slate-800/80">
+    <section class="mb-12 bg-white/80 dark:bg-slate-850/80 backdrop-blur-xl rounded-3xl p-5 sm:p-7 shadow-sm border border-slate-200/80 dark:border-slate-800/80">
       <div class="flex flex-col lg:flex-row gap-4 items-stretch lg:items-center justify-between">
         
-        <!-- Search Input -->
+        <!-- Search Input with Keyboard Shortcut hint -->
         <div class="relative flex-1 max-w-xl">
-          <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
+          <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
             <i data-lucide="search" class="w-5 h-5"></i>
           </div>
           <input 
             type="text" 
             id="searchInput" 
-            placeholder="พิมพ์คำค้นหา เช่น ชื่อโปรเจกต์ ลิงก์ คำอธิบาย..." 
-            class="block w-full pl-10 pr-10 py-3 bg-slate-50 dark:bg-slate-900 border-none rounded-xl focus:ring-2 focus:ring-emerald-500 focus:outline-none text-slate-900 dark:text-white placeholder-slate-400 text-sm transition-all"
+            placeholder="ค้นหาโปรเจกต์ (เช่น วัคซีน, HOSxP, Guideline, คำนวณ)..." 
+            class="block w-full pl-11 pr-20 py-3.5 bg-slate-50 dark:bg-slate-900 border border-slate-200/80 dark:border-slate-750 rounded-2xl focus:ring-2 focus:ring-emerald-500 focus:border-transparent focus:outline-none text-slate-900 dark:text-white placeholder-slate-400 text-sm transition-all shadow-inner"
           />
-          <button id="clearSearchBtn" class="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 hidden">
-            <i data-lucide="x" class="w-4 h-4"></i>
-          </button>
+          <div class="absolute inset-y-0 right-0 pr-3 flex items-center gap-1.5">
+            <kbd class="hidden sm:inline-flex items-center px-2 py-0.5 text-[10px] font-mono font-semibold text-slate-400 bg-slate-200/60 dark:bg-slate-800 border border-slate-300/60 dark:border-slate-700 rounded-md">Ctrl K</kbd>
+            <button id="clearSearchBtn" class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 hidden p-1">
+              <i data-lucide="x" class="w-4 h-4"></i>
+            </button>
+          </div>
         </div>
 
-        <div class="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400 bg-slate-50 dark:bg-slate-900 px-4 py-3 rounded-xl border border-slate-100 dark:border-slate-800/50">
-          <i data-lucide="info" class="w-4 h-4 text-emerald-500 shrink-0"></i>
-          <span>เลือกกรองดูบางประเภท หรือพิมพ์คำสำคัญเพื่อคัดกรองข้อมูลอย่างรวดเร็ว</span>
+        <div class="flex items-center gap-2.5 text-xs text-slate-500 dark:text-slate-400 bg-slate-50/80 dark:bg-slate-900/80 px-4 py-3 rounded-2xl border border-slate-200/60 dark:border-slate-800">
+          <i data-lucide="sparkles" class="w-4 h-4 text-emerald-500 shrink-0"></i>
+          <span>คลิกหมวดหมู่เพื่อกรอง หรือพิมพ์คำค้นเพื่อสืบค้นระบบงานทันที</span>
         </div>
       </div>
 
       <!-- Categories Filter Tabs -->
-      <div class="mt-5 flex flex-wrap gap-2 border-t border-slate-100 dark:border-slate-700/50 pt-4" id="categoryFilters">
-        <!-- Will be rendered dynamically -->
+      <div class="mt-5 flex flex-wrap gap-2.5 border-t border-slate-100 dark:border-slate-750 pt-5" id="categoryFilters">
+        <!-- Will be rendered dynamically via renderCategoryTabs() -->
       </div>
     </section>
 
@@ -192,28 +236,35 @@
     </main>
 
     <!-- EMPTY STATE VIEW -->
-    <div id="emptyState" class="hidden flex-col items-center justify-center py-16 px-4 bg-white dark:bg-slate-800 rounded-2xl border border-slate-100 dark:border-slate-800 text-center shadow-sm">
-      <div class="w-16 h-16 bg-slate-100 dark:bg-slate-900 text-slate-400 dark:text-slate-600 rounded-full flex items-center justify-center mb-4">
+    <div id="emptyState" class="hidden flex-col items-center justify-center py-20 px-4 bg-white/80 dark:bg-slate-850/80 backdrop-blur-md rounded-3xl border border-slate-200/80 dark:border-slate-800 text-center shadow-sm">
+      <div class="w-16 h-16 bg-slate-100 dark:bg-slate-800 text-slate-400 dark:text-slate-500 rounded-2xl flex items-center justify-center mb-4 shadow-inner">
         <i data-lucide="folder-search" class="w-8 h-8"></i>
       </div>
-      <h3 class="text-lg font-bold text-slate-950 dark:text-white">ไม่พบแฟ้มหรือโปรเจกต์ที่ตรงกับเงื่อนไข</h3>
-      <p class="text-sm text-slate-500 dark:text-slate-400 mt-1 max-w-sm">
-        ลองเปลี่ยนกลุ่มตัวกรอง ล้างคำสืบค้น หรือกดปุ่มด้านล่างเพื่อแสดงรายการทั้งหมด
+      <h3 class="text-lg font-bold text-slate-900 dark:text-white">ไม่พบระบบงานหรือโปรเจกต์ที่ตรงกับเงื่อนไข</h3>
+      <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1.5 max-w-sm leading-relaxed">
+        ลองสลับหมวดหมู่ ล้างคำค้นหา หรือกดปุ่มด้านล่างเพื่อแสดงรายการทั้งหมด
       </p>
-      <button id="clearAllFiltersBtn" class="mt-4 px-4 py-2 bg-emerald-500 hover:bg-emerald-600 text-white font-semibold rounded-xl text-sm active:scale-95 transition-all">
+      <button id="clearAllFiltersBtn" class="mt-5 px-5 py-2.5 bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white font-semibold rounded-xl text-xs sm:text-sm shadow-md shadow-emerald-500/20 active:scale-95 transition-all">
         รีเซ็ตการค้นหาทั้งหมด
       </button>
     </div>
 
   </div>
 
+  <!-- FLOATING SCROLL TO TOP BUTTON -->
+  <button id="scrollToTopBtn" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="fixed bottom-6 right-6 z-40 p-3 bg-white/90 dark:bg-slate-800/90 text-slate-700 dark:text-slate-200 border border-slate-200/80 dark:border-slate-700 rounded-2xl shadow-lg backdrop-blur-md opacity-0 translate-y-4 pointer-events-none transition-all duration-300 hover:bg-emerald-500 hover:text-white dark:hover:bg-emerald-500 dark:hover:text-white hover:scale-105" title="กลับสู่ด้านบน">
+    <i data-lucide="arrow-up" class="w-5 h-5"></i>
+  </button>
+
   <!-- GLOBAL DIALOG MODAL (For Folder, Category, Card creations/edits) -->
-  <div id="configModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm opacity-0 pointer-events-none transition-all duration-300">
-    <div class="bg-white dark:bg-slate-800 w-full max-w-2xl rounded-3xl shadow-2xl border border-slate-100 dark:border-slate-700 overflow-hidden transform scale-95 transition-all duration-300 max-h-[90vh] flex flex-col">
+  <div id="configModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/60 backdrop-blur-md opacity-0 pointer-events-none transition-all duration-300">
+    <div class="bg-white dark:bg-slate-850 w-full max-w-2xl rounded-3xl shadow-2xl border border-slate-200/80 dark:border-slate-750 overflow-hidden transform scale-95 transition-all duration-300 max-h-[90vh] flex flex-col">
       <!-- Modal Header -->
-      <div class="px-6 py-4 border-b border-slate-100 dark:border-slate-700/50 flex justify-between items-center bg-slate-50 dark:bg-slate-900/40">
-        <h3 id="modalTitle" class="text-lg font-bold text-slate-900 dark:text-white">ปรับแต่งบอร์ด</h3>
-        <button onclick="closeModal()" class="p-1 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition-colors">
+      <div class="px-6 py-4.5 border-b border-slate-100 dark:border-slate-750 flex justify-between items-center bg-slate-50/70 dark:bg-slate-900/60">
+        <h3 id="modalTitle" class="text-base sm:text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
+          <span>ปรับแต่งบอร์ด</span>
+        </h3>
+        <button onclick="closeModal()" class="p-1.5 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 rounded-lg hover:bg-slate-200/60 dark:hover:bg-slate-800 transition-colors">
           <i data-lucide="x" class="w-5 h-5"></i>
         </button>
       </div>
@@ -222,11 +273,11 @@
         <!-- Content will be injected dynamically -->
       </div>
       <!-- Modal Footer -->
-      <div class="px-6 py-4 border-t border-slate-100 dark:border-slate-700/50 flex items-center justify-end gap-3 bg-slate-50 dark:bg-slate-900/40">
-        <button onclick="closeModal()" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold rounded-xl text-xs dark:bg-slate-700 dark:text-slate-300 dark:hover:bg-slate-600 transition-all">
+      <div class="px-6 py-4 border-t border-slate-100 dark:border-slate-750 flex items-center justify-end gap-3 bg-slate-50/70 dark:bg-slate-900/60">
+        <button onclick="closeModal()" class="px-4 py-2.5 bg-slate-100 hover:bg-slate-200/80 text-slate-700 font-semibold rounded-xl text-xs dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-slate-700 transition-all">
           ยกเลิก
         </button>
-        <button id="saveModalBtn" class="px-4 py-2 bg-emerald-500 hover:bg-emerald-600 text-white font-semibold rounded-xl text-xs shadow-md shadow-emerald-500/20 transition-all">
+        <button id="saveModalBtn" class="px-5 py-2.5 bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white font-semibold rounded-xl text-xs shadow-md shadow-emerald-500/20 transition-all active:scale-95">
           บันทึกการแก้ไข
         </button>
       </div>
@@ -234,9 +285,11 @@
   </div>
 
   <!-- TOAST NOTIFICATION -->
-  <div id="toast" class="fixed bottom-5 right-5 z-50 bg-slate-900 dark:bg-slate-800 text-white border border-slate-800 dark:border-slate-700 px-4 py-3 rounded-xl shadow-xl flex items-center gap-2 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none">
-    <i data-lucide="check-circle" class="w-5 h-5 text-emerald-400"></i>
-    <span id="toastMsg" class="text-sm font-medium">บันทึกเรียบร้อย!</span>
+  <div id="toast" class="fixed bottom-6 left-6 z-50 bg-slate-900/95 dark:bg-slate-800/95 text-white border border-slate-800 dark:border-slate-700 px-4 py-3 rounded-2xl shadow-2xl backdrop-blur-md flex items-center gap-2.5 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none">
+    <div class="p-1 bg-emerald-500/20 text-emerald-400 rounded-lg">
+      <i data-lucide="check-circle" class="w-4 h-4"></i>
+    </div>
+    <span id="toastMsg" class="text-xs sm:text-sm font-medium">บันทึกเรียบร้อย!</span>
   </div>
 
   <script>
@@ -346,7 +399,7 @@
       "id": "warfarin",
       "folderId": "folderPharmacy",
       "categoryId": "clinical",
-      "emoji": "💊",
+      "emoji": "🩸",
       "title": "Warfarin Tool Suite",
       "subtitle": "Anticoagulant Care",
       "desc": "ชุดโปรแกรมบันทึกข้อมูลผู้ป่วยและการตรวจสอบความซ้ำซ้อนของการประเมินยา Warfarin",
@@ -415,21 +468,17 @@
       ]
     },
     {
-      "id": "vaccine-manager",
+      "id": "ctk-vaccine-manager",
       "folderId": "folderPharmacy",
       "categoryId": "vaccine",
       "emoji": "💉",
-      "title": "Vaccine Manager",
-      "subtitle": "Label & Inventory Monitor",
-      "desc": "ระบบบริหารจัดการวัคซีนแบบครบวงจร ครอบคลุมทั้งการพิมพ์ฉลากสติ๊กเกอร์ตามมาตรฐาน และแดชบอร์ดสรุปยอดคงคลังแบบ Real-time",
+      "title": "CTK Vaccine Manager",
+      "subtitle": "ระบบจัดการวัคซีนและเวชภัณฑ์ รพ.ชาติตระการ",
+      "desc": "ระบบบริหารจัดการคลังวัคซีน โรงพยาบาลชาติตระการและเครือข่าย รพ.สต. ตรวจสอบสต็อก ตัดเบิก บันทึกรับ-จ่าย และรายงานความครอบคลุม",
       "links": [
         {
-          "text": "Vaccine Label Manager (VaxPrint)",
-          "url": "https://ai.studio/apps/drive/1gtbE1VGYg4_Y-Qmp5plWmEfi4wRXa6rO"
-        },
-        {
-          "text": "Vaccine Dashboard",
-          "url": "https://anupong0620.github.io/vaccine-inventory-dashboard/"
+          "text": "เปิดใช้งาน CTK Vaccine Manager",
+          "url": "https://script.google.com/macros/s/AKfycbxL-VrUK4_kHRUZR2ZFzcRE4dMz0hZK8tgBWGgF4X8dIdNpxGXtRWXkaPHlifTbS7R4/exec"
         }
       ]
     },
@@ -556,10 +605,10 @@
     }
   ];
 
-    // Storage Keys
-    const STORE_FOLDERS = 'custom:folders:v5';
-    const STORE_CATEGORIES = 'custom:categories:v5';
-    const STORE_CARDS = 'custom:cards:v5';
+    // Storage Keys (Bumped to v7 for clean sync and upgrade)
+    const STORE_FOLDERS = 'custom:folders:v7';
+    const STORE_CATEGORIES = 'custom:categories:v7';
+    const STORE_CARDS = 'custom:cards:v7';
     const STORE_THEME = 'projectGridTheme';
 
     // Explicit DOM Element References
@@ -586,9 +635,19 @@
     // DATA LOAD & STORAGE MANAGEMENT
     // -----------------------------------------------------------------
     function loadState() {
-      folders = JSON.parse(localStorage.getItem(STORE_FOLDERS)) || defaultFolders;
-      categories = JSON.parse(localStorage.getItem(STORE_CATEGORIES)) || defaultCategories;
+      folders = JSON.parse(localStorage.getItem(STORE_FOLDERS)) || JSON.parse(localStorage.getItem('custom:folders:v6')) || JSON.parse(localStorage.getItem('custom:folders:v5')) || defaultFolders;
+      categories = JSON.parse(localStorage.getItem(STORE_CATEGORIES)) || JSON.parse(localStorage.getItem('custom:categories:v6')) || JSON.parse(localStorage.getItem('custom:categories:v5')) || defaultCategories;
       cards = JSON.parse(localStorage.getItem(STORE_CARDS)) || defaultCards;
+
+      // ลบการ์ด vaccine-manager เก่าออก เพื่อให้แสดงเฉพาะ CTK Vaccine Manager ตามที่ต้องการ
+      cards = cards.filter(c => c.id !== 'vaccine-manager');
+
+      // ตรวจสอบและซิงค์การ์ดใหม่จาก defaultCards หากยังไม่มีในการ์ดที่ผู้ใช้เคยเซฟไว้
+      defaultCards.forEach(dc => {
+        if (!cards.some(c => c.id === dc.id)) {
+          cards.push(dc);
+        }
+      });
     }
 
     function saveState() {
@@ -644,7 +703,7 @@
 
         // Folder HTML Structure
         const folderDiv = document.createElement('div');
-        folderDiv.className = `relative bg-white dark:bg-slate-800 rounded-3xl p-6 shadow-md border ${isEditMode ? 'border-dashed border-emerald-400 dark:border-emerald-700/80 bg-emerald-500/[0.01]' : 'border-slate-100 dark:border-slate-800/80'} transition-all duration-300`;
+        folderDiv.className = `relative bg-white/70 dark:bg-slate-850/70 backdrop-blur-md rounded-3xl p-6 sm:p-8 shadow-sm border ${isEditMode ? 'border-dashed border-emerald-400 dark:border-emerald-600 bg-emerald-500/[0.02]' : 'border-slate-200/80 dark:border-slate-800'} transition-all duration-300`;
         folderDiv.id = `folder-wrapper-${folder.id}`;
 
         // Color badge for dynamic folder visual cues
@@ -654,28 +713,33 @@
         // Folder Header
         folderDiv.innerHTML = `
           <!-- Hanging Folder Tab Graphic -->
-          <div class="absolute top-0 left-6 -translate-y-[90%] ${folderColor} text-white font-bold text-xs sm:text-sm px-5 py-2.5 rounded-t-2xl shadow-sm flex items-center gap-2 border-t border-x border-white/10">
+          <div class="absolute top-0 left-6 -translate-y-[85%] ${folderColor} text-white font-bold text-xs sm:text-sm px-5 py-2.5 rounded-t-2xl shadow-md flex items-center gap-2 border-t border-x border-white/20 backdrop-blur-sm">
             <i data-lucide="folder" class="w-4 h-4"></i>
             <span>${folder.name}</span>
-            <span class="bg-black/20 text-[11px] px-2 py-0.5 rounded-full font-medium ml-1">${folderCards.length}</span>
+            <span class="bg-black/20 text-[11px] px-2 py-0.5 rounded-full font-semibold ml-1">${folderCards.length}</span>
           </div>
 
           <!-- Folder Inner Header -->
-          <div class="border-b border-slate-100 dark:border-slate-700/50 pb-4 mb-6 flex items-start justify-between gap-4">
+          <div class="border-b border-slate-100 dark:border-slate-750 pb-5 mb-7 flex items-start justify-between gap-4">
             <div>
-              <h2 class="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
-                <span>${folder.name}</span>
-              </h2>
-              <p class="text-xs text-slate-400 dark:text-slate-400 mt-1">${folder.desc || 'ไม่มีคำอธิบายเพิ่มเติม'}</p>
+              <div class="flex items-center gap-2.5">
+                <h2 class="text-lg sm:text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2 tracking-tight font-heading">
+                  <span>${folder.name}</span>
+                </h2>
+                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200/60 dark:border-slate-700">
+                  ${folderCards.length} ระบบงาน
+                </span>
+              </div>
+              <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1.5 leading-relaxed">${folder.desc || 'ไม่มีคำอธิบายเพิ่มเติม'}</p>
             </div>
             
             <!-- Folder Actions (If in Edit Mode) -->
             ${isEditMode ? `
-              <div class="flex items-center gap-2">
-                <button onclick="openFolderModal('${folder.id}')" class="p-1.5 text-slate-400 hover:text-blue-500 transition-colors" title="แก้ไขแฟ้มสะสมงาน">
+              <div class="flex items-center gap-1.5 shrink-0 bg-slate-100 dark:bg-slate-800 p-1 rounded-xl">
+                <button onclick="openFolderModal('${folder.id}')" class="p-2 text-slate-600 dark:text-slate-300 hover:text-blue-500 hover:bg-white dark:hover:bg-slate-700 rounded-lg transition-all" title="แก้ไขแฟ้มสะสมงาน">
                   <i data-lucide="edit-3" class="w-4 h-4"></i>
                 </button>
-                <button onclick="deleteFolder('${folder.id}')" class="p-1.5 text-slate-400 hover:text-red-500 transition-colors" title="ลบแฟ้มสะสมงาน">
+                <button onclick="deleteFolder('${folder.id}')" class="p-2 text-slate-600 dark:text-slate-300 hover:text-red-500 hover:bg-white dark:hover:bg-slate-700 rounded-lg transition-all" title="ลบแฟ้มสะสมงาน">
                   <i data-lucide="trash-2" class="w-4 h-4"></i>
                 </button>
               </div>
@@ -698,21 +762,21 @@
           
           // Badge Color Map
           const badgeColors = {
-            sky: "bg-sky-100 text-sky-700 dark:bg-sky-950 dark:text-sky-300",
-            indigo: "bg-indigo-100 text-indigo-700 dark:bg-indigo-950 dark:text-indigo-300",
-            emerald: "bg-emerald-100 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300",
-            rose: "bg-rose-100 text-rose-700 dark:bg-rose-950 dark:text-rose-300",
-            yellow: "bg-yellow-100 text-yellow-700 dark:bg-yellow-950 dark:text-yellow-300",
-            teal: "bg-teal-100 text-teal-700 dark:bg-teal-950 dark:text-teal-300",
-            pink: "bg-pink-100 text-pink-700 dark:bg-pink-950 dark:text-pink-300",
-            purple: "bg-purple-100 text-purple-700 dark:bg-purple-950 dark:text-purple-300",
-            slate: "bg-slate-100 text-slate-700 dark:bg-slate-900 dark:text-slate-400"
+            sky: "bg-sky-50 text-sky-700 border-sky-200 dark:bg-sky-950/60 dark:text-sky-300 dark:border-sky-800/60",
+            indigo: "bg-indigo-50 text-indigo-700 border-indigo-200 dark:bg-indigo-950/60 dark:text-indigo-300 dark:border-indigo-800/60",
+            emerald: "bg-emerald-50 text-emerald-700 border-emerald-200 dark:bg-emerald-950/60 dark:text-emerald-300 dark:border-emerald-800/60",
+            rose: "bg-rose-50 text-rose-700 border-rose-200 dark:bg-rose-950/60 dark:text-rose-300 dark:border-rose-800/60",
+            yellow: "bg-amber-50 text-amber-700 border-amber-200 dark:bg-amber-950/60 dark:text-amber-300 dark:border-amber-800/60",
+            teal: "bg-teal-50 text-teal-700 border-teal-200 dark:bg-teal-950/60 dark:text-teal-300 dark:border-teal-800/60",
+            pink: "bg-pink-50 text-pink-700 border-pink-200 dark:bg-pink-950/60 dark:text-pink-300 dark:border-pink-800/60",
+            purple: "bg-purple-50 text-purple-700 border-purple-200 dark:bg-purple-950/60 dark:text-purple-300 dark:border-purple-800/60",
+            slate: "bg-slate-50 text-slate-700 border-slate-200 dark:bg-slate-800 dark:text-slate-300 dark:border-slate-700"
           };
 
           const badgeClass = badgeColors[cardCat.color] || badgeColors.slate;
 
           const cardDiv = document.createElement('div');
-          cardDiv.className = `group bg-slate-50 dark:bg-slate-900 rounded-2xl p-5 border ${isEditMode ? 'border-emerald-200 dark:border-emerald-900/60' : 'border-slate-100 dark:border-slate-800/80 hover:border-emerald-500/30'} transition-all duration-300 flex flex-col justify-between`;
+          cardDiv.className = `group bg-white dark:bg-slate-850 rounded-2xl p-5 border ${isEditMode ? 'border-dashed border-emerald-400 dark:border-emerald-600 bg-emerald-500/[0.01]' : 'border-slate-200/80 dark:border-slate-750 hover:border-emerald-500/50 dark:hover:border-emerald-500/50 shadow-sm hover:shadow-xl hover:shadow-emerald-500/5 hover:-translate-y-1'} transition-all duration-300 flex flex-col justify-between relative overflow-hidden`;
           cardDiv.dataset.id = card.id;
 
           // Build Dynamic Links HTML
@@ -722,17 +786,17 @@
               if (idx === 0) {
                 // Primary button
                 linksHTML += `
-                  <a href="${link.url}" target="_blank" rel="noopener" class="flex items-center justify-center gap-2 w-full bg-emerald-500 hover:bg-emerald-600 text-white font-semibold py-2.5 px-3 rounded-xl shadow-sm shadow-emerald-500/10 active:scale-95 transition-all text-xs min-h-[38px]">
+                  <a href="${link.url}" target="_blank" rel="noopener" class="group/btn flex items-center justify-center gap-2 w-full bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white font-semibold py-2.5 px-3.5 rounded-xl shadow-md shadow-emerald-500/20 hover:shadow-lg hover:shadow-emerald-500/30 active:scale-[0.98] transition-all text-xs min-h-[40px]">
                     <span class="text-center leading-tight whitespace-normal break-words">${link.text}</span>
-                    <i data-lucide="external-link" class="w-3.5 h-3.5 shrink-0"></i>
+                    <i data-lucide="external-link" class="w-3.5 h-3.5 shrink-0 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 transition-transform"></i>
                   </a>
                 `;
               } else {
                 // Secondary button
                 linksHTML += `
-                  <a href="${link.url}" target="_blank" rel="noopener" class="flex items-center justify-center gap-2 w-full bg-white border border-slate-200 dark:border-slate-800 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 font-semibold py-2.5 px-3 rounded-xl active:scale-95 transition-all text-xs min-h-[38px]">
+                  <a href="${link.url}" target="_blank" rel="noopener" class="group/btn flex items-center justify-center gap-2 w-full bg-slate-50 hover:bg-slate-100 dark:bg-slate-800/80 dark:hover:bg-slate-700 border border-slate-200/80 dark:border-slate-750 text-slate-700 dark:text-slate-200 font-medium py-2.5 px-3.5 rounded-xl hover:border-slate-300 dark:hover:border-slate-600 active:scale-[0.98] transition-all text-xs min-h-[40px]">
                     <span class="text-center leading-tight whitespace-normal break-words">${link.text}</span>
-                    <i data-lucide="external-link" class="w-3.5 h-3.5 shrink-0"></i>
+                    <i data-lucide="external-link" class="w-3.5 h-3.5 shrink-0 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 transition-transform"></i>
                   </a>
                 `;
               }
@@ -741,40 +805,50 @@
 
           cardDiv.innerHTML = `
             <div>
-              <!-- Grab / Drag Handle -->
-              <div class="drag-handle flex items-center justify-between mb-4 bg-white dark:bg-slate-800 px-3 py-1.5 rounded-lg border border-slate-100 dark:border-slate-800 cursor-grab active:cursor-grabbing transition-colors" title="ลากเพื่อย้ายตําแหน่ง">
-                <div class="flex items-center gap-1.5 text-slate-400">
-                  <span class="text-lg">⠿</span>
-                  <span class="text-[10px] font-semibold tracking-wide uppercase">ลากย้าย</span>
-                </div>
-                <div class="flex items-center gap-1.5">
-                  <span class="px-2 py-0.5 text-[10px] font-bold rounded ${badgeClass}">${cardCat.name}</span>
+              <!-- Top bar inside card: category badge + drag / edit controls -->
+              <div class="flex items-center justify-between mb-3.5">
+                <span class="inline-flex items-center gap-1.5 px-2.5 py-1 text-[11px] font-bold rounded-lg border ${badgeClass}">
+                  <span class="w-1.5 h-1.5 rounded-full bg-current opacity-70"></span>
+                  ${cardCat.name}
+                </span>
+
+                <div class="flex items-center gap-1">
                   ${isEditMode ? `
-                    <button onclick="openCardModal('${card.id}')" class="p-0.5 text-slate-400 hover:text-blue-500 transition-colors" title="แก้ไขการ์ด">
+                    <button onclick="openCardModal('${card.id}')" class="p-1.5 text-slate-400 hover:text-blue-500 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors" title="แก้ไขการ์ด">
                       <i data-lucide="edit-2" class="w-3.5 h-3.5"></i>
                     </button>
-                    <button onclick="deleteCard('${card.id}')" class="p-0.5 text-slate-400 hover:text-red-500 transition-colors" title="ลบการ์ด">
+                    <button onclick="deleteCard('${card.id}')" class="p-1.5 text-slate-400 hover:text-red-500 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors" title="ลบการ์ด">
                       <i data-lucide="trash" class="w-3.5 h-3.5"></i>
                     </button>
                   ` : ''}
+                  <div class="drag-handle p-1 text-slate-300 dark:text-slate-600 hover:text-slate-500 dark:hover:text-slate-400 cursor-grab active:cursor-grabbing rounded" title="ลากเพื่อย้ายตำแหน่ง">
+                    <i data-lucide="grip-vertical" class="w-4 h-4"></i>
+                  </div>
                 </div>
               </div>
 
               <!-- Main Card Body -->
-              <div class="flex items-start gap-3">
-                <span class="text-2xl mt-0.5">${card.emoji || '🩺'}</span>
-                <div>
-                  <h3 class="text-base font-bold text-slate-950 dark:text-white group-hover:text-emerald-500 transition-colors">${card.title}</h3>
-                  <p class="text-[11px] font-semibold text-slate-400 mt-0.5">${card.subtitle}</p>
+              <div class="flex items-start gap-3.5 mt-1">
+                <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-slate-100 to-slate-50 dark:from-slate-750 dark:to-slate-800 border border-slate-200/70 dark:border-slate-700/70 flex items-center justify-center text-2xl shadow-inner shrink-0 group-hover:scale-105 transition-transform duration-300">
+                  ${card.emoji || '🩺'}
+                </div>
+                <div class="min-w-0 flex-1">
+                  <h3 class="text-[15px] font-bold text-slate-900 dark:text-white group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors leading-snug">
+                    ${card.title}
+                  </h3>
+                  <p class="text-[11px] font-medium text-slate-400 dark:text-slate-400 mt-0.5 truncate">
+                    ${card.subtitle}
+                  </p>
                 </div>
               </div>
-              <p class="text-xs text-slate-500 dark:text-slate-400 mt-3 leading-relaxed">
+
+              <p class="text-xs text-slate-600 dark:text-slate-300 mt-3 leading-relaxed line-clamp-3 min-h-[50px]">
                 ${card.desc}
               </p>
             </div>
 
             <!-- Links list container -->
-            <div class="mt-6 space-y-2">
+            <div class="mt-5 space-y-2 pt-3 border-t border-slate-100 dark:border-slate-750">
               ${linksHTML}
             </div>
           `;
@@ -858,16 +932,24 @@
       // All Tab
       const allBtn = document.createElement('button');
       allBtn.dataset.filter = 'all';
-      allBtn.className = `filter-tab px-4 py-2 text-xs sm:text-sm font-semibold rounded-lg transition-all ${activeFilter === 'all' ? 'bg-emerald-500 text-white shadow-sm shadow-emerald-500/20' : 'bg-slate-100 text-slate-600 hover:bg-slate-200/70 dark:bg-slate-900 dark:text-slate-400 dark:hover:bg-slate-700'}`;
-      allBtn.innerHTML = `ทั้งหมด (<span id="count-all">0</span>)`;
+      const isAllActive = activeFilter === 'all';
+      allBtn.className = `filter-tab group flex items-center gap-2 px-4 py-2 text-xs sm:text-sm font-semibold rounded-xl transition-all duration-200 ${isAllActive ? 'bg-gradient-to-r from-emerald-500 to-teal-600 text-white shadow-md shadow-emerald-500/25 scale-[1.02]' : 'bg-slate-100/80 text-slate-600 hover:bg-slate-200/80 dark:bg-slate-800 dark:text-slate-400 dark:hover:bg-slate-700 hover:scale-[1.01]'}`;
+      allBtn.innerHTML = `
+        <span>ทั้งหมด</span>
+        <span class="text-[11px] font-bold px-2 py-0.5 rounded-full ${isAllActive ? 'bg-white/20 text-white' : 'bg-slate-200/80 text-slate-600 dark:bg-slate-700 dark:text-slate-300'}" id="count-all">0</span>
+      `;
       container.appendChild(allBtn);
 
       // Render Dynamic Custom Categories
       categories.forEach(cat => {
         const catBtn = document.createElement('button');
         catBtn.dataset.filter = cat.id;
-        catBtn.className = `filter-tab px-4 py-2 text-xs sm:text-sm font-semibold rounded-lg transition-all ${activeFilter === cat.id ? 'bg-emerald-500 text-white shadow-sm shadow-emerald-500/20' : 'bg-slate-100 text-slate-600 hover:bg-slate-200/70 dark:bg-slate-900 dark:text-slate-400 dark:hover:bg-slate-700'}`;
-        catBtn.innerHTML = `${cat.name} (<span id="count-${cat.id}">0</span>)`;
+        const isCatActive = activeFilter === cat.id;
+        catBtn.className = `filter-tab group flex items-center gap-2 px-4 py-2 text-xs sm:text-sm font-semibold rounded-xl transition-all duration-200 ${isCatActive ? 'bg-gradient-to-r from-emerald-500 to-teal-600 text-white shadow-md shadow-emerald-500/25 scale-[1.02]' : 'bg-slate-100/80 text-slate-600 hover:bg-slate-200/80 dark:bg-slate-800 dark:text-slate-400 dark:hover:bg-slate-700 hover:scale-[1.01]'}`;
+        catBtn.innerHTML = `
+          <span>${cat.name}</span>
+          <span class="text-[11px] font-bold px-2 py-0.5 rounded-full ${isCatActive ? 'bg-white/20 text-white' : 'bg-slate-200/80 text-slate-600 dark:bg-slate-700 dark:text-slate-300'}" id="count-${cat.id}">0</span>
+        `;
         container.appendChild(catBtn);
       });
 
@@ -884,13 +966,17 @@
         const countEl = document.getElementById(`count-${cat.id}`);
         if (countEl) countEl.innerText = catCount;
       });
+
+      // Update stat counters in header if available
+      const statTotalCards = document.getElementById('statTotalCards');
+      if (statTotalCards) statTotalCards.innerText = allCount;
     }
 
     // -----------------------------------------------------------------
     // EDIT DIALOG MODALS ENGINE (Vanilla Popup Modals)
     // -----------------------------------------------------------------
     function openModal(title, bodyHTML, onSaveCallback, saveBtnText = "บันทึกการแก้ไข") {
-      document.getElementById('modalTitle').innerText = title;
+      document.getElementById('modalTitle').innerHTML = `<span>${title}</span>`;
       document.getElementById('modalBody').innerHTML = bodyHTML;
       
       const saveBtn = document.getElementById('saveModalBtn');
@@ -929,12 +1015,12 @@
       const bodyHTML = `
         <div class="space-y-4">
           <div>
-            <label class="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1">ชื่อแฟ้มสะสมงาน</label>
-            <input type="text" id="fName" value="${folder.name}" placeholder="เช่น 🏥 แฟ้มงานวิชาการและวิจัย" class="w-full px-4 py-2.5 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:outline-none text-slate-900 dark:text-white" />
+            <label class="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1.5">ชื่อแฟ้มสะสมงาน</label>
+            <input type="text" id="fName" value="${folder.name}" placeholder="เช่น 🏥 แฟ้มงานวิชาการและวิจัย" class="w-full px-4 py-2.5 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:outline-none text-slate-900 dark:text-white text-sm" />
           </div>
           <div>
-            <label class="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1">คำอธิบายย่อ</label>
-            <textarea id="fDesc" rows="3" placeholder="ระบุขอบเขตงานหรือรายละเอียดประกอบแฟ้ม..." class="w-full px-4 py-2.5 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:outline-none text-slate-900 dark:text-white">${folder.desc}</textarea>
+            <label class="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1.5">คำอธิบายย่อ</label>
+            <textarea id="fDesc" rows="3" placeholder="ระบุขอบเขตงานหรือรายละเอียดประกอบแฟ้ม..." class="w-full px-4 py-2.5 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:outline-none text-slate-900 dark:text-white text-sm leading-relaxed">${folder.desc}</textarea>
           </div>
         </div>
       `;
@@ -1005,10 +1091,10 @@
       let catListHTML = '';
       categories.forEach(cat => {
         catListHTML += `
-          <div class="flex items-center gap-3 p-3 bg-slate-50 dark:bg-slate-900 rounded-xl">
-            <span class="w-4 h-4 rounded-full bg-${cat.color}-400 shrink-0"></span>
+          <div class="flex items-center gap-3 p-3 bg-slate-50 dark:bg-slate-900 rounded-xl border border-slate-100 dark:border-slate-800">
+            <span class="w-3.5 h-3.5 rounded-full bg-${cat.color}-400 shrink-0"></span>
             <input type="text" value="${cat.name}" id="cat-input-${cat.id}" class="flex-1 bg-transparent border-none p-0 font-medium text-slate-800 dark:text-slate-100 focus:outline-none focus:ring-0 text-sm" />
-            <select id="cat-color-${cat.id}" class="bg-white dark:bg-slate-800 text-xs rounded border border-slate-200 dark:border-slate-700 py-1 px-1.5 focus:outline-none">
+            <select id="cat-color-${cat.id}" class="bg-white dark:bg-slate-800 text-xs rounded-lg border border-slate-200 dark:border-slate-700 py-1.5 px-2 focus:outline-none">
               <option value="sky" ${cat.color === 'sky' ? 'selected' : ''}>สีฟ้า</option>
               <option value="indigo" ${cat.color === 'indigo' ? 'selected' : ''}>สีน้ำเงิน</option>
               <option value="emerald" ${cat.color === 'emerald' ? 'selected' : ''}>สีเขียว</option>
@@ -1019,7 +1105,7 @@
               <option value="purple" ${cat.color === 'purple' ? 'selected' : ''}>สีม่วง</option>
               <option value="slate" ${cat.color === 'slate' ? 'selected' : ''}>สีเทา</option>
             </select>
-            <button onclick="deleteCategory('${cat.id}')" class="text-slate-400 hover:text-red-500 transition-colors">
+            <button onclick="deleteCategory('${cat.id}')" class="text-slate-400 hover:text-red-500 transition-colors p-1" title="ลบหมวดหมู่นี้">
               <i data-lucide="trash-2" class="w-4 h-4"></i>
             </button>
           </div>
@@ -1028,95 +1114,91 @@
 
       const bodyHTML = `
         <div class="space-y-4">
-          <div class="flex items-center justify-between">
-            <h4 class="font-bold text-slate-900 dark:text-white">รายการหมวดหมู่ย่อยปัจจุบัน</h4>
-            <button onclick="addNewCategoryRow()" class="text-xs font-bold text-emerald-500 hover:text-emerald-600 flex items-center gap-1">
-              <i data-lucide="plus" class="w-3.5 h-3.5"></i>เพิ่มหมวดหมู่ใหม่
-            </button>
-          </div>
-          <div class="space-y-2 max-h-64 overflow-y-auto" id="categoriesEditList">
+          <p class="text-xs text-slate-400">แก้ไขชื่อหรือสัญลักษณ์หมวดหมู่ (ระบบจะอัปเดตป้ายสถานะของการ์ดให้อัตโนมัติ)</p>
+          <div class="space-y-2 max-h-64 overflow-y-auto pr-1">
             ${catListHTML}
           </div>
-          <p class="text-[11px] text-slate-400">หมายเหตุ: เพื่อความเป็นระเบียบเรียบร้อย เมื่อลบหมวดหมู่ใดๆ ออก โปรเจกต์ที่ผูกอยู่จะเปลี่ยนไปจัดหมวดหมู่อยู่ในกลุ่ม 'อื่นๆ' (ทั่วไป) โดยอัตโนมัติ</p>
+
+          <!-- Add new Category row -->
+          <div class="border-t border-slate-100 dark:border-slate-750 pt-4">
+            <label class="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">เพิ่มหมวดหมู่ใหม่</label>
+            <div class="flex gap-2">
+              <input type="text" id="newCatName" placeholder="เช่น 🔬 งานชันสูตร/แล็บ" class="flex-1 px-3 py-2 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl text-xs text-slate-900 dark:text-white focus:outline-none focus:ring-1 focus:ring-emerald-500" />
+              <select id="newCatColor" class="bg-slate-50 dark:bg-slate-900 text-xs rounded-xl border border-slate-200 dark:border-slate-700 px-2 focus:outline-none text-slate-700 dark:text-slate-300">
+                <option value="sky">สีฟ้า</option>
+                <option value="indigo">สีน้ำเงิน</option>
+                <option value="emerald">สีเขียว</option>
+                <option value="rose">สีแดง</option>
+                <option value="yellow">สีเหลือง</option>
+                <option value="teal">สีเขียวหัวเป็ด</option>
+                <option value="pink">สีชมพู</option>
+                <option value="purple">สีม่วง</option>
+                <option value="slate">สีเทา</option>
+              </select>
+              <button type="button" onclick="addNewCategoryRow()" class="px-3 py-2 bg-emerald-500 hover:bg-emerald-600 text-white rounded-xl text-xs font-semibold shadow-sm transition-all">
+                เพิ่ม
+              </button>
+            </div>
+          </div>
         </div>
       `;
 
       openModal('จัดการหมวดหมู่ย่อย', bodyHTML, () => {
-        // Save editing of categories
+        // Update existing categories
         categories.forEach(cat => {
-          const nameInput = document.getElementById(`cat-input-${cat.id}`);
-          const colorSel = document.getElementById(`cat-color-${cat.id}`);
-          if (nameInput) {
-            cat.name = nameInput.value.trim();
+          const inputEl = document.getElementById(`cat-input-${cat.id}`);
+          const colorEl = document.getElementById(`cat-color-${cat.id}`);
+          if (inputEl && inputEl.value.trim()) {
+            cat.name = inputEl.value.trim();
           }
-          if (colorSel) {
-            cat.color = colorSel.value;
+          if (colorEl) {
+            cat.color = colorEl.value;
           }
         });
-
-        // Clean up categories with empty names
-        categories = categories.filter(cat => cat.name.trim() !== '');
 
         saveState();
         renderCategoryTabs();
         renderDashboard();
-        showToast("ปรับปรุงหมวดหมู่ย่อยสำเร็จ!");
+        showToast("บันทึกหมวดหมู่เรียบร้อยแล้ว!");
         return true;
       });
 
-      // Rerun lucide on newly rendered dynamic list
       lucide.createIcons();
     }
 
     function addNewCategoryRow() {
-      const container = document.getElementById('categoriesEditList');
-      const newId = 'cat-' + Date.now();
-      const newRow = document.createElement('div');
-      newRow.className = "flex items-center gap-3 p-3 bg-slate-50 dark:bg-slate-900 rounded-xl";
-      newRow.innerHTML = `
-        <span class="w-4 h-4 rounded-full bg-emerald-400 shrink-0"></span>
-        <input type="text" placeholder="ชื่อหมวดหมู่ใหม่..." id="cat-input-${newId}" class="flex-1 bg-transparent border-none p-0 font-medium text-slate-800 dark:text-slate-100 focus:outline-none focus:ring-0 text-sm" />
-        <select id="cat-color-${newId}" class="bg-white dark:bg-slate-800 text-xs rounded border border-slate-200 dark:border-slate-700 py-1 px-1.5 focus:outline-none">
-          <option value="emerald" selected>สีเขียว</option>
-          <option value="sky">สีฟ้า</option>
-          <option value="indigo">สีน้ำเงิน</option>
-          <option value="rose">สีแดง</option>
-          <option value="yellow">สีเหลือง</option>
-          <option value="teal">สีเขียวหัวเป็ด</option>
-          <option value="pink">สีชมพู</option>
-          <option value="purple">สีม่วง</option>
-          <option value="slate">สีเทา</option>
-        </select>
-        <button onclick="this.parentElement.remove()" class="text-slate-400 hover:text-red-500 transition-colors">
-          <i data-lucide="trash-2" class="w-4 h-4"></i>
-        </button>
-      `;
-      container.appendChild(newRow);
-      
-      // Add into dynamic cache array temporarily so the global modal save action handles it seamlessly
+      const nameInput = document.getElementById('newCatName');
+      const colorSelect = document.getElementById('newCatColor');
+      const name = nameInput.value.trim();
+      const color = colorSelect.value;
+
+      if (!name) {
+        showToast("กรุณากรอกชื่อหมวดหมู่ด้วยครับ");
+        return;
+      }
+
       categories.push({
-        id: newId,
-        name: '',
-        color: 'emerald'
+        id: 'cat-' + Date.now(),
+        name: name,
+        color: color
       });
 
-      lucide.createIcons();
+      nameInput.value = '';
+      openCategoryModal(); // Refresh modal view
     }
 
     function deleteCategory(catId) {
-      categories = categories.filter(c => c.id !== catId);
-      
-      // Update any card associated to fallback "slate" default color
-      cards.forEach(c => {
-        if (c.categoryId === catId) c.categoryId = 'slate'; 
-      });
+      if (categories.length <= 1) {
+        showToast("ไม่สามารถลบหมวดหมู่ทั้งหมดได้ ต้องเหลือไว้อย่างน้อย 1 หมวดหมู่นะครับ");
+        return;
+      }
 
-      // Refresh categories manager view
+      categories = categories.filter(c => c.id !== catId);
       openCategoryModal();
     }
 
     // -----------------------------------------------------------------
-    // CARDS CRUD OPERATOR
+    // CARD CRUD OPERATOR
     // -----------------------------------------------------------------
     let linkEditCount = 0;
 
@@ -1145,9 +1227,9 @@
       if (card.links && Array.isArray(card.links)) {
         card.links.forEach((l, i) => {
           linksListHTML += `
-            <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 p-3 bg-slate-50 dark:bg-slate-900 rounded-xl" id="link-row-${i}">
-              <input type="text" value="${l.text}" placeholder="ชื่อปุ่มกด (เช่น เปิดโปรแกรม)" id="link-text-${i}" class="flex-1 px-3 py-1.5 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg focus:outline-none focus:ring-1 focus:ring-emerald-500 text-xs text-slate-850 dark:text-white" />
-              <input type="url" value="${l.url}" placeholder="URL ลิงก์ปลายทาง" id="link-url-${i}" class="flex-[2] px-3 py-1.5 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg focus:outline-none focus:ring-1 focus:ring-emerald-500 text-xs text-slate-850 dark:text-white" />
+            <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 p-3 bg-slate-50 dark:bg-slate-900 rounded-xl border border-slate-100 dark:border-slate-800" id="link-row-${i}">
+              <input type="text" value="${l.text}" placeholder="ชื่อปุ่มกด (เช่น เปิดโปรแกรม)" id="link-text-${i}" class="flex-1 px-3 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg focus:outline-none focus:ring-1 focus:ring-emerald-500 text-xs text-slate-850 dark:text-white" />
+              <input type="url" value="${l.url}" placeholder="URL ลิงก์ปลายทาง" id="link-url-${i}" class="flex-[2] px-3 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg focus:outline-none focus:ring-1 focus:ring-emerald-500 text-xs text-slate-850 dark:text-white" />
               <button type="button" onclick="removeLinkInput(${i})" class="text-slate-400 hover:text-red-500 p-1 self-end sm:self-auto shrink-0">
                 <i data-lucide="trash-2" class="w-4 h-4"></i>
               </button>
@@ -1161,35 +1243,35 @@
           <!-- Main details row -->
           <div class="grid grid-cols-4 gap-3">
             <div class="col-span-1">
-              <label class="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1">ไอคอน (Emoji)</label>
-              <input type="text" id="cEmoji" value="${card.emoji || '🩺'}" maxlength="4" class="w-full text-center px-2 py-2.5 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:outline-none text-slate-900 dark:text-white" />
+              <label class="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1.5">ไอคอน (Emoji)</label>
+              <input type="text" id="cEmoji" value="${card.emoji || '🩺'}" maxlength="4" class="w-full text-center px-2 py-2.5 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:outline-none text-slate-900 dark:text-white text-base" />
             </div>
             <div class="col-span-3">
-              <label class="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1">ชื่อโปรเจกต์</label>
-              <input type="text" id="cTitle" value="${card.title}" placeholder="เช่น Warfarin Saved Note" class="w-full px-4 py-2.5 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:outline-none text-slate-900 dark:text-white" />
+              <label class="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1.5">ชื่อโปรเจกต์ / ระบบงาน</label>
+              <input type="text" id="cTitle" value="${card.title}" placeholder="เช่น CTK Vaccine Manager" class="w-full px-4 py-2.5 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:outline-none text-slate-900 dark:text-white text-sm" />
             </div>
           </div>
 
           <div>
-            <label class="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1">คำบรรยายย่อย (เช่น ชื่อผู้จัดทำ/ฝ่าย)</label>
-            <input type="text" id="cSubtitle" value="${card.subtitle}" placeholder="เช่น เภสัชกรเอ็นดู • แผนกไอที" class="w-full px-4 py-2.5 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:outline-none text-slate-900 dark:text-white" />
+            <label class="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1.5">คำบรรยายย่อย (เช่น ชื่อผู้จัดทำ / ฝ่ายงาน)</label>
+            <input type="text" id="cSubtitle" value="${card.subtitle}" placeholder="เช่น เภสัชกรเอ็นดู • แผนกไอที" class="w-full px-4 py-2.5 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:outline-none text-slate-900 dark:text-white text-sm" />
           </div>
 
           <div>
-            <label class="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1">คำอธิบายรายละเอียดโปรเจกต์</label>
-            <textarea id="cDesc" rows="3" placeholder="ระบุวัตถุประสงค์และประโยชน์สั้นๆ เพื่อให้สืบค้นง่าย..." class="w-full px-4 py-2.5 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:outline-none text-slate-900 dark:text-white">${card.desc || ''}</textarea>
+            <label class="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1.5">คำอธิบายรายละเอียดโปรเจกต์</label>
+            <textarea id="cDesc" rows="3" placeholder="ระบุวัตถุประสงค์และประโยชน์สั้นๆ เพื่อให้สืบค้นง่าย..." class="w-full px-4 py-2.5 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:outline-none text-slate-900 dark:text-white text-sm leading-relaxed">${card.desc || ''}</textarea>
           </div>
 
           <!-- Select lists row -->
           <div class="grid grid-cols-2 gap-3">
             <div>
-              <label class="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1">จัดเก็บลงแฟ้มสะสมงาน</label>
+              <label class="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1.5">จัดเก็บลงแฟ้มสะสมงาน</label>
               <select id="cFolder" class="w-full px-3 py-2.5 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl focus:outline-none text-slate-900 dark:text-white text-xs">
                 ${folderOptions}
               </select>
             </div>
             <div>
-              <label class="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1">กลุ่มหมวดหมู่</label>
+              <label class="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1.5">กลุ่มหมวดหมู่</label>
               <select id="cCategory" class="w-full px-3 py-2.5 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl focus:outline-none text-slate-900 dark:text-white text-xs">
                 ${categoryOptions}
               </select>
@@ -1197,7 +1279,7 @@
           </div>
 
           <!-- Dynamic Link Inputs List -->
-          <div class="border-t border-slate-100 dark:border-slate-700/50 pt-4 space-y-2">
+          <div class="border-t border-slate-100 dark:border-slate-750 pt-4 space-y-2">
             <div class="flex justify-between items-center">
               <label class="block text-xs font-bold uppercase tracking-wider text-slate-400">ปุ่มลิงก์นำทางของโปรเจกต์</label>
               <button type="button" onclick="addNewLinkInputRow()" class="text-xs font-bold text-emerald-500 hover:text-emerald-600 flex items-center gap-1">
@@ -1280,11 +1362,11 @@
       const container = document.getElementById('cardLinksEditList');
       const idx = linkEditCount;
       const newRow = document.createElement('div');
-      newRow.className = "flex flex-col sm:flex-row items-stretch sm:items-center gap-2 p-3 bg-slate-50 dark:bg-slate-900 rounded-xl";
+      newRow.className = "flex flex-col sm:flex-row items-stretch sm:items-center gap-2 p-3 bg-slate-50 dark:bg-slate-900 rounded-xl border border-slate-100 dark:border-slate-800";
       newRow.id = `link-row-${idx}`;
       newRow.innerHTML = `
-        <input type="text" placeholder="ชื่อปุ่มกด (เช่น เปิดโปรแกรม)" id="link-text-${idx}" class="flex-1 px-3 py-1.5 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg focus:outline-none focus:ring-1 focus:ring-emerald-500 text-xs text-slate-850 dark:text-white" />
-        <input type="url" placeholder="URL ลิงก์ปลายทาง" id="link-url-${idx}" class="flex-[2] px-3 py-1.5 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg focus:outline-none focus:ring-1 focus:ring-emerald-500 text-xs text-slate-850 dark:text-white" />
+        <input type="text" placeholder="ชื่อปุ่มกด (เช่น เปิดโปรแกรม)" id="link-text-${idx}" class="flex-1 px-3 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg focus:outline-none focus:ring-1 focus:ring-emerald-500 text-xs text-slate-850 dark:text-white" />
+        <input type="url" placeholder="URL ลิงก์ปลายทาง" id="link-url-${idx}" class="flex-[2] px-3 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg focus:outline-none focus:ring-1 focus:ring-emerald-500 text-xs text-slate-850 dark:text-white" />
         <button type="button" onclick="removeLinkInput(${idx})" class="text-slate-400 hover:text-red-500 p-1 self-end sm:self-auto shrink-0">
           <i data-lucide="trash-2" class="w-4 h-4"></i>
         </button>
@@ -1322,7 +1404,7 @@
     }
 
     // ==========================================
-    // 🌗 4. LIGHT/DARK THEME CONTROLLER
+    // 🌗 LIGHT/DARK THEME CONTROLLER
     // ==========================================
     function initTheme() {
       const savedTheme = localStorage.getItem(STORE_THEME);
@@ -1354,7 +1436,7 @@
     });
 
     // ==========================================
-    // 💬 5. REAL-TIME SEARCH & EVENT LISTENERS
+    // 💬 REAL-TIME SEARCH & EVENT LISTENERS
     // ==========================================
     searchInput.addEventListener('input', (e) => {
       searchQuery = e.target.value;
@@ -1378,13 +1460,8 @@
       const tab = e.target.closest('.filter-tab');
       if (!tab) return;
 
-      document.querySelectorAll('.filter-tab').forEach(el => {
-        el.className = 'filter-tab px-4 py-2 text-xs sm:text-sm font-semibold rounded-lg bg-slate-100 text-slate-600 hover:bg-slate-200/70 dark:bg-slate-900 dark:text-slate-400 dark:hover:bg-slate-700 transition-all';
-      });
-
-      tab.className = 'filter-tab px-4 py-2 text-xs sm:text-sm font-semibold rounded-lg bg-emerald-500 text-white shadow-sm shadow-emerald-500/20 transition-all';
-      
       activeFilter = tab.dataset.filter;
+      renderCategoryTabs();
       renderDashboard();
     });
 
@@ -1408,19 +1485,57 @@
         toolbar.classList.remove('hidden');
         textSpan.innerText = 'ปิดโหมดปรับแต่งบอร์ด';
         icon.setAttribute('data-lucide', 'check');
-        document.getElementById('editModeBtn').classList.remove('bg-emerald-500', 'hover:bg-emerald-600');
-        document.getElementById('editModeBtn').classList.add('bg-blue-600', 'hover:bg-blue-700');
+        document.getElementById('editModeBtn').classList.remove('from-emerald-500', 'to-teal-600');
+        document.getElementById('editModeBtn').classList.add('from-blue-600', 'to-indigo-600');
         showToast("เข้าสู่โหมดปรับแต่งบอร์ดแล้ว! คุณสามารถแก้ไขชื่อแฟ้ม แก้ไขการ์ด หรือเพิ่มลดโปรเจกต์ได้อิสระครับ");
       } else {
         toolbar.classList.add('hidden');
         textSpan.innerText = 'เปิดโหมดปรับแต่งบอร์ด';
         icon.setAttribute('data-lucide', 'edit-3');
-        document.getElementById('editModeBtn').classList.remove('bg-blue-600', 'hover:bg-blue-700');
-        document.getElementById('editModeBtn').classList.add('bg-emerald-500', 'hover:bg-emerald-600');
+        document.getElementById('editModeBtn').classList.remove('from-blue-600', 'to-indigo-600');
+        document.getElementById('editModeBtn').classList.add('from-emerald-500', 'to-teal-600');
         showToast("ออกจากโหมดปรับแต่งเสร็จสิ้น บันทึกทุกลำดับเรียบร้อย!");
       }
       lucide.createIcons();
       renderDashboard();
+    });
+
+    // Global Keyboard Shortcuts
+    window.addEventListener('keydown', (e) => {
+      // Ctrl+K, Cmd+K, or Slash to search
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault();
+        searchInput.focus();
+        searchInput.select();
+      } else if (e.key === '/' && document.activeElement.tagName !== 'INPUT' && document.activeElement.tagName !== 'TEXTAREA') {
+        e.preventDefault();
+        searchInput.focus();
+        searchInput.select();
+      } else if (e.key === 'Escape') {
+        if (!document.getElementById('configModal').classList.contains('pointer-events-none')) {
+          closeModal();
+        } else if (document.activeElement === searchInput) {
+          searchInput.value = '';
+          searchQuery = '';
+          clearSearchBtn.classList.add('hidden');
+          searchInput.blur();
+          renderDashboard();
+        }
+      }
+    });
+
+    // Scroll listener for back to top button
+    window.addEventListener('scroll', () => {
+      const topBtn = document.getElementById('scrollToTopBtn');
+      if (topBtn) {
+        if (window.scrollY > 300) {
+          topBtn.classList.remove('opacity-0', 'translate-y-4', 'pointer-events-none');
+          topBtn.classList.add('opacity-100', 'translate-y-0');
+        } else {
+          topBtn.classList.add('opacity-0', 'translate-y-4', 'pointer-events-none');
+          topBtn.classList.remove('opacity-100', 'translate-y-0');
+        }
+      }
     });
 
     // -----------------------------------------------------------------
@@ -1435,7 +1550,7 @@
       if (container) container.innerHTML = '\n      <!-- Will be rendered dynamically via renderDashboard() -->\n    ';
       
       const catFilters = clone.querySelector('#categoryFilters');
-      if (catFilters) catFilters.innerHTML = '\n        <!-- Will be rendered dynamically -->\n      ';
+      if (catFilters) catFilters.innerHTML = '\n        <!-- Will be rendered dynamically via renderCategoryTabs() -->\n      ';
 
       const modalBody = clone.querySelector('#modalBody');
       if (modalBody) modalBody.innerHTML = '\n        <!-- Content will be injected dynamically -->\n      ';
@@ -1446,8 +1561,8 @@
       
       const editBtn = clone.querySelector('#editModeBtn');
       if (editBtn) {
-         editBtn.classList.remove('bg-blue-600', 'hover:bg-blue-700');
-         editBtn.classList.add('bg-emerald-500', 'hover:bg-emerald-600');
+         editBtn.classList.remove('from-blue-600', 'to-indigo-600');
+         editBtn.classList.add('from-emerald-500', 'to-teal-600');
       }
       const editText = clone.querySelector('#editModeText');
       if (editText) editText.innerText = 'เปิดโหมดปรับแต่งบอร์ด';
@@ -1456,124 +1571,33 @@
       if (editIcon) {
          editIcon.classList.remove('lucide-check');
          editIcon.classList.add('lucide-edit-3');
+         editIcon.setAttribute('data-lucide', 'edit-3');
       }
 
-      const emptyState = clone.querySelector('#emptyState');
-      if (emptyState) {
-          emptyState.classList.add('hidden');
-          emptyState.classList.remove('flex');
-      }
-
-      const searchInputClone = clone.querySelector('#searchInput');
-      if (searchInputClone) {
-          searchInputClone.value = '';
-          searchInputClone.removeAttribute('value');
-      }
-
-      const clearSearchBtnClone = clone.querySelector('#clearSearchBtn');
-      if (clearSearchBtnClone) clearSearchBtnClone.classList.add('hidden');
+      // 4. แปลงสตริงโค้ด JavaScript ที่อัปเดต state ปัจจุบันกลับเข้าสู่แท็ก script
+      let htmlString = "<!DOCTYPE html>\n" + clone.outerHTML;
       
-      // รีเซ็ตหน้าต่าง Modal และ Toast
-      const modal = clone.querySelector('#configModal');
-      if (modal) {
-        modal.classList.add('opacity-0', 'pointer-events-none');
-        const modalTransform = modal.querySelector('.transform');
-        if (modalTransform) {
-           modalTransform.classList.remove('scale-100');
-           modalTransform.classList.add('scale-95');
-        }
-      }
-      
-      const toast = clone.querySelector('#toast');
-      if (toast) {
-        toast.classList.remove('translate-y-0', 'opacity-100');
-        toast.classList.add('translate-y-20', 'opacity-0');
-      }
+      // อัปเดต defaultCards, defaultFolders, defaultCategories ในสคริปต์
+      const jsonFolders = JSON.stringify(folders, null, 2);
+      const jsonCategories = JSON.stringify(categories, null, 2);
+      const jsonCards = JSON.stringify(cards, null, 2);
 
-      // 4. แปลงไอคอน SVG ของ Lucide กลับเป็น <i> tags เพื่อให้ไฟล์โหลดใหม่ถูกต้อง
-      const svgs = clone.querySelectorAll('svg');
-      svgs.forEach(svg => {
-          const classStr = svg.getAttribute('class') || '';
-          const lucideMatch = classStr.match(/lucide-([a-zA-Z0-9-]+)/);
-          
-          if (lucideMatch) {
-              const i = document.createElement('i');
-              i.setAttribute('data-lucide', lucideMatch[1]);
-              
-              const otherClasses = classStr.split(' ').filter(c => c !== 'lucide' && !c.startsWith('lucide-')).join(' ');
-              if (otherClasses) {
-                  i.setAttribute('class', otherClasses);
-              }
-              
-              if (svg.id) i.id = svg.id;
-              svg.replaceWith(i);
-          }
-      });
+      htmlString = htmlString.replace(/const defaultFolders = \[[\s\S]*?\];/m, `const defaultFolders = ${jsonFolders};`);
+      htmlString = htmlString.replace(/const defaultCategories = \[[\s\S]*?\];/m, `const defaultCategories = ${jsonCategories};`);
+      htmlString = htmlString.replace(/const defaultCards = \[[\s\S]*?\];/m, `const defaultCards = ${jsonCards};`);
 
-      // รีเซ็ตคลาส dark mode ให้ใช้ค่าเริ่มต้นตามระบบ (ไม่ hardcode ไว้ตอน export)
-      clone.classList.remove('dark', 'light');
+      // 5. Trigger download file
+      const blob = new Blob([htmlString], { type: 'text/html;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'index.html';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
 
-      // 5. ประกอบร่างเป็นโค้ด HTML ทั้งแผ่น
-      let fullHTML = '<!DOCTYPE html>\n' + clone.outerHTML;
-
-      // 6. นำตัวแปร JSON ล่าสุดใส่ทับค่าเดิมในไฟล์
-      const foldersCode = `const defaultFolders = ${JSON.stringify(folders, null, 2)};`;
-      const categoriesCode = `const defaultCategories = ${JSON.stringify(categories, null, 2)};`;
-      const cardsCode = `const defaultCards = ${JSON.stringify(cards, null, 2)};`;
-
-      fullHTML = fullHTML.replace(/const defaultFolders = \[[\s\S]*?\n\];/, foldersCode);
-      fullHTML = fullHTML.replace(/const defaultCategories = \[[\s\S]*?\n\];/, categoriesCode);
-      fullHTML = fullHTML.replace(/const defaultCards = \[[\s\S]*?\n\];/, cardsCode);
-
-      // 7. นำเสนอให้ผู้ใช้งาน
-      const bodyHTML = `
-        <div class="space-y-3">
-          <div class="bg-emerald-50 dark:bg-emerald-900/30 border border-emerald-200 dark:border-emerald-700/50 p-4 rounded-xl flex items-start gap-3">
-            <i data-lucide="info" class="w-5 h-5 text-emerald-600 dark:text-emerald-400 shrink-0 mt-0.5"></i>
-            <div class="text-xs text-emerald-800 dark:text-emerald-300">
-              <p class="font-bold text-sm mb-1">วิธีนำโค้ดทั้งหมดไปใช้งาน</p>
-              <ol class="list-decimal ml-4 space-y-1.5 mt-2">
-                <li>คุณสามารถกดปุ่ม <strong>"คัดลอกโค้ดทั้งหมด"</strong> หรือ <strong>"ดาวน์โหลดเป็นไฟล์ HTML"</strong> ได้เลย</li>
-                <li>ระบบได้ฝังการตั้งค่า ข้อมูลแฟ้ม หมวดหมู่ และโปรเจกต์ล่าสุดไว้ในโค้ดชุดนี้เรียบร้อยแล้ว</li>
-                <li>นำไปวางทับไฟล์เดิมบน GitHub หรือระบบ Host ของคุณเพื่ออัปเดตหน้าเว็บได้ทันที</li>
-              </ol>
-            </div>
-          </div>
-          <textarea id="exportCodeTextarea" rows="12" class="w-full text-[11px] font-mono bg-slate-100 dark:bg-slate-950 text-slate-800 dark:text-slate-300 p-3 rounded-xl border border-slate-200 dark:border-slate-700 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 whitespace-pre" spellcheck="false" readonly></textarea>
-        </div>
-        <div class="mt-4 flex flex-col sm:flex-row gap-2">
-          <button id="downloadHtmlBtn" class="flex-1 px-4 py-3 bg-indigo-500 hover:bg-indigo-600 text-white font-semibold rounded-xl text-sm shadow-md shadow-indigo-500/20 active:scale-95 transition-all flex justify-center items-center gap-2">
-              <i data-lucide="download-cloud" class="w-5 h-5"></i> ดาวน์โหลดเป็นไฟล์ HTML (.html)
-          </button>
-        </div>
-      `;
-
-      openModal('Export โค้ดระบบทั้งหมด (Full HTML)', bodyHTML, () => {
-        const textarea = document.getElementById('exportCodeTextarea');
-        textarea.select();
-        document.execCommand('copy');
-        showToast("คัดลอกโค้ดทั้งหมดเข้า Clipboard แล้ว!");
-        return true;
-      }, "คัดลอกโค้ดทั้งหมด");
-
-      // เอาโค้ดยัดลง textarea แยกเพื่อความสมบูรณ์ของ text string
-      document.getElementById('exportCodeTextarea').value = fullHTML;
-
-      // ผูก Event ให้กับปุ่มดาวน์โหลดไฟล์
-      document.getElementById('downloadHtmlBtn').addEventListener('click', () => {
-        const blob = new Blob([fullHTML], { type: 'text/html;charset=utf-8' });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = 'dashboard-portal.html'; // ตั้งชื่อไฟล์ที่ดาวน์โหลด
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        URL.revokeObjectURL(url);
-        showToast("ดาวน์โหลดไฟล์ HTML เรียบร้อย! ลองเช็คในโฟลเดอร์ Download ของคุณนะครับ");
-      });
-
-      lucide.createIcons();
+      showToast("สร้างและดาวน์โหลดไฟล์ index.html สำเร็จ นำไป Commit บน GitHub ได้ทันที!");
     });
 
     // Reset All configurations back to default settings
@@ -1589,6 +1613,8 @@
         localStorage.removeItem(STORE_FOLDERS);
         localStorage.removeItem(STORE_CATEGORIES);
         localStorage.removeItem(STORE_CARDS);
+        localStorage.removeItem('custom:cards:v6');
+        localStorage.removeItem('custom:cards:v5');
         
         // Force refresh to get new default code instead of cached localStorage
         loadState();
